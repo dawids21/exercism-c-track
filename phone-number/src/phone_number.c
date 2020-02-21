@@ -21,8 +21,9 @@ char *phone_number_clean(const char *input)
             strcpy(phone_number, "0000000000");
         }
     }
-    //Area code can't start with 0 or 1
-    if (phone_number[0] == '0' || phone_number[0] == '1')
+    //Area and exchange code can't be 0 or 1
+    if (phone_number[0] == '0' || phone_number[0] == '1' ||
+        phone_number[3] == '0' || phone_number[3] == '1')
     {
         strcpy(phone_number, "0000000000");
     }
