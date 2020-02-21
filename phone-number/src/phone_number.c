@@ -11,6 +11,7 @@ char *phone_number_clean(const char *input)
     int length = extract_digits(input, phone_number);
     if (length != 10)
     {
+        //Number is valid if has 11 digits and first digit is 1
         if (length == 11 && phone_number[0] == '1')
         {
             strcpy(phone_number, &phone_number[1]);
@@ -19,6 +20,10 @@ char *phone_number_clean(const char *input)
         {
             strcpy(phone_number, "0000000000");
         }
+    }
+    if (phone_number[0] == '0' || phone_number[0] == '1')
+    {
+        strcpy(phone_number, "0000000000");
     }
     return phone_number;
 }
@@ -33,6 +38,7 @@ static int extract_digits(const char* input, char* output)
             output[length] = input[i];
             length++;
         }
+        //Number can't contain letters
         else if (isalpha(input[i]))
         {
             length = 0;
