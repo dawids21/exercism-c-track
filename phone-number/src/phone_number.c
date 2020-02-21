@@ -11,7 +11,14 @@ char *phone_number_clean(const char *input)
     int length = extract_digits(input, phone_number);
     if (length != 10)
     {
-        strcpy(phone_number, "00000000000");
+        if (length == 11 && phone_number[0] == '1')
+        {
+            strcpy(phone_number, &phone_number[1]);
+        }
+        else
+        {
+            strcpy(phone_number, "0000000000");
+        }
     }
     return phone_number;
 }
