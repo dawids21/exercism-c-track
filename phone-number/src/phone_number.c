@@ -33,6 +33,11 @@ static int extract_digits(const char* input, char* output)
             output[length] = input[i];
             length++;
         }
+        else if (isalpha(input[i]))
+        {
+            length = 0;
+            break;
+        }
     }
     return length;
 }
