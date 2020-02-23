@@ -7,7 +7,7 @@ static int extract_digits(const char* input, char* output);
 
 char *phone_number_clean(const char *input)
 {
-    char* phone_number = (char*)malloc(sizeof(char) * (strlen(input)+1));
+    char* phone_number = (char*)malloc(sizeof(char) * (strlen(input)+2));
     int length = extract_digits(input, phone_number);
 
     //Number is valid if has 11 digits and first digit is 1
@@ -44,5 +44,6 @@ static int extract_digits(const char* input, char* output)
             break;
         }
     }
+    output[length] = '\0';
     return length;
 }
