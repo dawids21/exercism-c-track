@@ -7,13 +7,13 @@ static int extract_digits(const char* input, char* output);
 
 char *phone_number_clean(const char *input)
 {
-    char* phone_number = (char*)malloc(sizeof(char)*strlen(input));
+    char* phone_number = (char*)malloc(sizeof(char) * (strlen(input)+1));
     int length = extract_digits(input, phone_number);
 
     //Number is valid if has 11 digits and first digit is 1
     if (length == 11 && phone_number[0] == '1')
     {
-        strcpy(phone_number, &phone_number[1]);
+        memmove(phone_number, &phone_number[1], 11);
         length--;
     }
 
