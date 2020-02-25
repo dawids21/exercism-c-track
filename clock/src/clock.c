@@ -6,7 +6,15 @@ clock_t clock_create(int hour, int minute)
 {
     clock_t clock;
     int time = hour*MINUTES_IN_HOUR + minute;
-    sprintf(clock.text, "%02d:%02d", (time/60)%24, time%60);
+    while (time < 0)
+    {
+        time += MINUTES_IN_24_HOURS;
+    }
+    while (time >= MINUTES_IN_24_HOURS)
+    {
+        time -= MINUTES_IN_24_HOURS;
+    }
+    sprintf(clock.text, "%02d:%02d", time/60, time%60);
     return clock;
 }
 
@@ -16,7 +24,7 @@ clock_t clock_add(clock_t clock, int minute_add)
     int time;
     sscanf(clock.text, "%d:%d", &hours, &minutes); //Check if it works
     time = hours*MINUTES_IN_HOUR + minutes + minute_add;
-    if (time >= MINUTES_IN_24_HOURS)
+    while (time >= MINUTES_IN_24_HOURS)
     {
         time -= MINUTES_IN_24_HOURS;
     }
@@ -30,7 +38,7 @@ clock_t clock_subtract(clock_t clock, int minute_subtract)
     int time;
     sscanf(clock.text, "%d:%d", &hours, &minutes); //Check if it works
     time = hours*MINUTES_IN_HOUR + minutes - minute_subtract;
-    if (time < 0)
+    while (time < 0)
     {
         time += MINUTES_IN_24_HOURS;
     }
