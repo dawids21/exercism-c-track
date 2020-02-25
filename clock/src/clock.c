@@ -5,7 +5,8 @@
 clock_t clock_create(int hour, int minute)
 {
     clock_t clock;
-    sprintf(clock.text, "%02d:%02d", hour%24, minute);
+    int time = hour*MINUTES_IN_HOUR + minute;
+    sprintf(clock.text, "%02d:%02d", (time/60)%24, time%60);
     return clock;
 }
 
