@@ -22,7 +22,7 @@ clock_t clock_add(clock_t clock, int minute_add)
 {
     int hours, minutes;
     int time;
-    sscanf(clock.text, "%d:%d", &hours, &minutes); //Check if it works
+    sscanf(clock.text, "%d:%d", &hours, &minutes);
     time = hours*MINUTES_IN_HOUR + minutes + minute_add;
     while (time >= MINUTES_IN_24_HOURS)
     {
