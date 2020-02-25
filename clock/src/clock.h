@@ -4,6 +4,8 @@
 #include <stdbool.h>
 
 #define MAX_STR_LEN (5 + 1)     // "##:##\0"
+#define MINUTES_IN_HOUR 60
+#define MINUTES_IN_24_HOURS 1440
 
 typedef struct {
    char text[MAX_STR_LEN];
