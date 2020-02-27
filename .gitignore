@@ -1,4 +1,7 @@
 */test/
 */tests.out
+*/test.out
 */makefile
 */.exercism/
+*/memcheck.out
+*/.vscode/
