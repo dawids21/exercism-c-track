@@ -10,9 +10,7 @@ series_results_t series(char *input_text, unsigned int substring_length)
     //case if substring_lenght is equal to 0
     if (substring_length == 0)
     {
-        series.substring = (char**)malloc(sizeof(char*));
-        series.substring[0] = (char*)malloc(sizeof(char));
-        series.substring[0][0] = '\0';
+        series.substring = 0;
         return series;
     }
 
