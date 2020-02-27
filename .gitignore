@@ -1,9 +1,4 @@
-pythagorean-triplet/src/pythagorean_triplet
-pythagorean-triplet/tests.out
-clock/makefile
-clock/.exercism/metadata.json
-clock/test/test_clock.c
-clock/test/vendor/unity_internals.h
-clock/test/vendor/unity.c
-clock/test/vendor/unity.h
-clock/tests.out
+*/test/
+*/tests.out
+*/makefile
+*/.exercism/
