@@ -49,13 +49,13 @@ void robot_advance(robot_grid_status_t * robot) {
 void robot_simulator(robot_grid_status_t * robot, const char *commands) {
     for (unsigned int command = 0; command <= strlen(commands); command++) {
         switch (commands[command]) {
-            case 'L':
+            case COMMAND_LEFT:
                 robot_turn_left(robot);
                 break;
-            case 'R':
+            case COMMAND_RIGHT:
                 robot_turn_right(robot);
                 break;
-            case 'A':
+            case COMMAND_ADVANCE:
                 robot_advance(robot);
                 break;
             default:
