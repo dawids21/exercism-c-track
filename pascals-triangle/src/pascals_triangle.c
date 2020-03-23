@@ -22,7 +22,11 @@ void free_triangle(size_t **triangle, size_t num_of_rows)
 size_t **create_triangle(int num_of_rows)
 {
     size_t **triangle = NULL;
-    if (num_of_rows == 0)
+    if (num_of_rows < 0)
+    {
+        return triangle;
+    }
+    else if (num_of_rows == 0)
     {
         triangle = (size_t **)malloc(sizeof(size_t *));
         triangle[0] = (size_t *)calloc(1, sizeof(size_t));
