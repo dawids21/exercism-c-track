@@ -3,7 +3,7 @@
 
 #include <stdlib.h>
 
-void free_triangle(size_t **, size_t);
-size_t **create_triangle(int);
+void free_triangle(size_t **triangle, size_t num_of_rows);
+size_t **create_triangle(int num_of_rows);
 
 #endif
