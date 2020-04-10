@@ -90,7 +90,7 @@ static int find_place_for_student(char *name, uint8_t grade)
         }
         else
         {
-            for (size_t i = 1; i < roster.count - 1; i++)
+            for (size_t i = 0; i < roster.count - 1; i++)
             {
                 if (roster.students[i].grade < grade && roster.students[i + 1].grade > grade)
                 {
@@ -107,13 +107,13 @@ static int find_place_for_student(char *name, uint8_t grade)
         {
             place_for_student = grade_start_index;
         }
-        else if (strcmp(name, roster.students[grade_start_index].name) > 0)
+        else if (strcmp(name, roster.students[grade_end_index].name) > 0)
         {
             place_for_student = grade_end_index + 1;
         }
         else
         {
-            for (int i = grade_start_index + 1; i < grade_end_index; i++)
+            for (int i = grade_start_index; i < grade_end_index; i++)
             {
                 if (strcmp(name, roster.students[i].name) > 0 && strcmp(name, roster.students[i + 1].name) < 0)
                 {
