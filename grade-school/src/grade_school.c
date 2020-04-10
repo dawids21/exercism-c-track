@@ -4,6 +4,9 @@
 static roster_t roster = {
     .count = 0};
 
+static int get_grade_start_index(uint8_t grade);
+static int find_place_for_student(char *name, uint8_t grade);
+
 roster_t get_roster(void)
 {
     return roster;
@@ -16,6 +19,19 @@ void clear_roster(void)
 
 bool add_student(char *name, uint8_t grade)
 {
+    if (roster.count == MAX_STUDENTS)
+    {
+        return false;
+    }
+    int place_for_student = find_place_for_student(name, grade);
+    for (int i = roster.count - 1; i >= place_for_student; i--)
+    {
+        memcpy(&roster.students[i + 1], &roster.students[i], sizeof(student_t));
+    }
+    strcpy(roster.students[place_for_student].name, name);
+    roster.students[place_for_student].grade = grade;
+    roster.count++;
+    return true;
 }
 
 roster_t get_grade(uint8_t grade)
@@ -27,7 +43,7 @@ roster_t get_grade(uint8_t grade)
     {
         return grade_roster;
     }
-    for (int i = grade_start_index; i < roster.count; i++)
+    for (int i = grade_start_index; (size_t)i < roster.count; i++)
     {
         if (roster.students[i].grade == grade)
         {
@@ -41,10 +57,24 @@ roster_t get_grade(uint8_t grade)
             break;
         }
     }
+    return grade_roster;
 }
 
 /* Find first item with given grade. If not found return -1 */
 static int get_grade_start_index(uint8_t grade)
 {
+    for (size_t i = 0; i < roster.count; i++)
+    {
+        if (roster.students[i].grade == grade)
+        {
+            return (int)i;
+        }
+    }
     return -1;
+}
+
+static int find_place_for_student(char *name, uint8_t grade)
+{
+    //TODO
+    return 0;
 }
