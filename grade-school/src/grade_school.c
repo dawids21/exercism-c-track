@@ -9,6 +9,7 @@ static roster_t roster = {
 static int find_place_for_student(char *name, uint8_t grade);
 static int get_grade_start_index(uint8_t grade);
 static int get_grade_end_index(uint8_t grade, int grade_start_index);
+static void refresh_cuts(int added_grade);
 
 roster_t get_roster(void)
 {
@@ -164,13 +165,6 @@ static void refresh_cuts(int added_grade)
     grade_cuts[added_grade * 2 - 1]++;
     for (int i = added_grade * 2; i < MAX_GRADES * 2; i++)
     {
-        if (grade_cuts[i] != 0)
-        {
-            grade_cuts[i]++;
-        }
-        else
-        {
-            break;
-        }
+        grade_cuts[i]++;
     }
 }
