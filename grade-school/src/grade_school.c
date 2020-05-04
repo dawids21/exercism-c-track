@@ -47,27 +47,10 @@ roster_t get_grade(uint8_t grade)
 {
     roster_t grade_roster;
     memset(&grade_roster, 0, sizeof(roster_t));
-    int grade_start_index = get_grade_start_index(grade);
-
-    /*If grade is not present return empty roster*/
-    if (grade_start_index == -1)
+    for (int i = grade_cuts[grade * 2 - 2]; i < grade_cuts[grade * 2 - 1]; i++)
     {
-        return grade_roster;
-    }
-
-    for (int i = grade_start_index; i < (int)roster.count; i++)
-    {
-        if (roster.students[i].grade == grade)
-        {
-            memcpy(&grade_roster.students[grade_roster.count],
-                   &roster.students[i],
-                   sizeof(student_t));
-            grade_roster.count++;
-        }
-        else
-        {
-            break;
-        }
+        memcpy(&grade_roster.students[grade_roster.count], &roster.students[i], sizeof(student_t));
+        grade_roster.count++;
     }
     return grade_roster;
 }
