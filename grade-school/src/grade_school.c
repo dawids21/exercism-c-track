@@ -62,54 +62,35 @@ static int find_place_for_student(char *name, uint8_t grade)
     int grade_start_index = get_grade_start_index(grade);
 
     /*If the grade is not present find correct place by comparing grades*/
-    if (grade_cuts[grade * 2 - 2])
-        if (grade_start_index == -1)
-        {
-            if (grade < roster.students[0].grade)
-            {
-                place_for_student = 0;
-            }
-            else if (grade > roster.students[roster.count - 1].grade)
-            {
-                place_for_student = roster.count;
-            }
-            else
-            {
-                for (int i = 0; i < (int)roster.count - 1; i++)
-                {
-                    if (roster.students[i].grade < grade && roster.students[i + 1].grade > grade)
-                    {
-                        place_for_student = i + 1;
-                        break;
-                    }
-                }
-            }
-        }
+    if (grade_cuts[get_grade_cut_start(grade)] == grade_cuts[get_grade_cut_start(grade) + 1])
+    {
+        place_for_student = grade_cuts[get_grade_cut_start(grade)];
+    }
 
-        /*If the grade is present find correct place by comparing names*/
+    /*If the grade is present find correct place by comparing names*/
+    else
+    {
+        int grade_end_index = get_grade_end_index(grade, grade_start_index);
+        if (strcmp(name, roster.students[grade_start_index].name) < 0)
+        {
+            place_for_student = grade_start_index;
+        }
+        else if (strcmp(name, roster.students[grade_end_index].name) > 0)
+        {
+            place_for_student = grade_end_index + 1;
+        }
         else
         {
-            int grade_end_index = get_grade_end_index(grade, grade_start_index);
-            if (strcmp(name, roster.students[grade_start_index].name) < 0)
+            for (int i = grade_start_index; i < grade_end_index; i++)
             {
-                place_for_student = grade_start_index;
-            }
-            else if (strcmp(name, roster.students[grade_end_index].name) > 0)
-            {
-                place_for_student = grade_end_index + 1;
-            }
-            else
-            {
-                for (int i = grade_start_index; i < grade_end_index; i++)
+                if (strcmp(name, roster.students[i].name) > 0 && strcmp(name, roster.students[i + 1].name) < 0)
                 {
-                    if (strcmp(name, roster.students[i].name) > 0 && strcmp(name, roster.students[i + 1].name) < 0)
-                    {
-                        place_for_student = i + 1;
-                        break;
-                    }
+                    place_for_student = i + 1;
+                    break;
                 }
             }
         }
+    }
     return place_for_student;
 }
 
