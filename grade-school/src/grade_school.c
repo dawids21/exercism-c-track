@@ -1,6 +1,8 @@
 #include "grade_school.h"
 #include <string.h>
 
+static int grade_cuts[MAX_GRADES * 2];
+
 static roster_t roster = {
     .count = 0};
 
@@ -16,6 +18,7 @@ roster_t get_roster(void)
 void clear_roster(void)
 {
     memset(&roster, 0, sizeof(roster_t));
+    memset(&grade_cuts, 0, sizeof(grade_cuts));
 }
 
 bool add_student(char *name, uint8_t grade)
@@ -35,6 +38,7 @@ bool add_student(char *name, uint8_t grade)
     strcpy(roster.students[place_for_student].name, name);
     roster.students[place_for_student].grade = grade;
     roster.count++;
+    refresh_cuts(grade);
     return true;
 }
 
@@ -153,4 +157,20 @@ static int get_grade_end_index(uint8_t grade, int grade_start_index)
         }
     }
     return grade_end_index;
+}
+
+static void refresh_cuts(int added_grade)
+{
+    grade_cuts[added_grade * 2 - 1]++;
+    for (int i = added_grade * 2; i < MAX_GRADES * 2; i++)
+    {
+        if (grade_cuts[i] != 0)
+        {
+            grade_cuts[i]++;
+        }
+        else
+        {
+            break;
+        }
+    }
 }
