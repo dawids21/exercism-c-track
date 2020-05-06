@@ -14,6 +14,13 @@ int convert(const char *input)
         }
         if (digit == '1')
         {
+            /**
+             * Number:      1010
+             * strlen-1:    3333
+             * i:           0123
+             * exponent:    3210
+             * So to get exponent function subtract i from strlen-1
+             **/
             number += (int)pow(2, strlen(input) - 1 - i);
         }
     }
