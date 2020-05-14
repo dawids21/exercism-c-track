@@ -5,7 +5,8 @@
 int convert(const char *input)
 {
     int number = 0;
-    for (int i = strlen(input) - 1; i >= 0; i--)
+    int input_len = strlen(input);
+    for (int i = input_len - 1; i >= 0; i--)
     {
         char digit = input[i];
         if (digit != '1' && digit != '0')
@@ -21,7 +22,7 @@ int convert(const char *input)
              * exponent:    3210
              * So to get exponent function subtract i from strlen-1
              **/
-            number += (int)pow(2, strlen(input) - 1 - i);
+            number += (int)pow(2, input_len - 1 - i);
         }
     }
     return number;
