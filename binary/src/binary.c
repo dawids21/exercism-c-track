@@ -22,7 +22,7 @@ int convert(const char *input)
              * strlen-1:    3333
              * i:           0123
              * exponent:    3210
-             * So to get exponent function subtract i from strlen-1
+             * So to get exponent value subtract i from strlen-1
              **/
             number += power(2, input_len - 1 - i);
         }
