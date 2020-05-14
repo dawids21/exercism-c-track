@@ -11,10 +11,6 @@ int convert(const char *input)
     for (int i = 0; i < input_len; i++)
     {
         char digit = input[i];
-        if (digit != '1' && digit != '0')
-        {
-            return INVALID;
-        }
         if (digit == '1')
         {
             /**
@@ -26,7 +22,11 @@ int convert(const char *input)
              **/
             number += power(2, input_len - 1 - i);
         }
-    }
+        else if (digit != '0')
+        {
+            return INVALID;
+        }
+        }
     return number;
 }
 
