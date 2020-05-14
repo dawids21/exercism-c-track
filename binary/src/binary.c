@@ -8,7 +8,7 @@ int convert(const char *input)
 {
     int number = 0;
     int input_len = strlen(input);
-    for (int i = input_len - 1; i >= 0; i--)
+    for (int i = 0; i < input_len; i++)
     {
         char digit = input[i];
         if (digit != '1' && digit != '0')
