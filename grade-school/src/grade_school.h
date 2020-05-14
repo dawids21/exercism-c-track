@@ -7,6 +7,7 @@
 
 #define MAX_NAME_LEN 20
 #define MAX_STUDENTS 20
+#define MAX_GRADES 10
 
 typedef struct
 {
