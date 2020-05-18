@@ -1,5 +1,6 @@
 #include "queen_attack.h"
 #include "stdbool.h"
+#include "stdlib.h"
 
 static bool checkRow(position_t queen1, position_t queen2);
 static bool checkColumn(position_t queen1, position_t queen2);
@@ -27,12 +28,10 @@ static bool checkRow(position_t queen1, position_t queen2)
 
 static bool checkColumn(position_t queen1, position_t queen2)
 {
-    bool can_attack = false;
-    return can_attack;
+    return queen1.column == queen2.column;
 }
 
 static bool checkDiagonal(position_t queen1, position_t queen2)
 {
-    bool can_attack = false;
-    return can_attack;
+    return abs(queen1.row - queen2.row) == abs(queen1.column - queen2.column);
 }
