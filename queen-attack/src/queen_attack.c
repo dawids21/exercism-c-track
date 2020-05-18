@@ -22,8 +22,7 @@ attack_status_t can_attack(position_t queen_1, position_t queen_2)
 
 static bool checkRow(position_t queen1, position_t queen2)
 {
-    bool can_attack = false;
-    return can_attack;
+    return queen1.row == queen2.row;
 }
 
 static bool checkColumn(position_t queen1, position_t queen2)
