@@ -1,4 +1,9 @@
 #include "queen_attack.h"
+#include "stdbool.h"
+
+static bool checkRow(position_t queen1, position_t queen2);
+static bool checkColumn(position_t queen1, position_t queen2);
+static bool checkDiagonal(position_t queen1, position_t queen2);
 
 attack_status_t can_attack(position_t queen_1, position_t queen_2)
 {
@@ -8,5 +13,27 @@ attack_status_t can_attack(position_t queen_1, position_t queen_2)
     {
         return INVALID_POSITION;
     }
-    return CAN_ATTACK;
+    if (checkRow(queen_1, queen_2) || checkColumn(queen_1, queen_2) || checkDiagonal(queen_1, queen_2))
+    {
+        return CAN_ATTACK;
+    }
+    return CAN_NOT_ATTACK;
+}
+
+static bool checkRow(position_t queen1, position_t queen2)
+{
+    bool can_attack = false;
+    return can_attack;
+}
+
+static bool checkColumn(position_t queen1, position_t queen2)
+{
+    bool can_attack = false;
+    return can_attack;
+}
+
+static bool checkDiagonal(position_t queen1, position_t queen2)
+{
+    bool can_attack = false;
+    return can_attack;
 }
