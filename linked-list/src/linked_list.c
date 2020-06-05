@@ -21,4 +21,34 @@ bool is_list_empty(struct list_item **list)
 {
     return *list == NULL;
 }
+
+bool push(struct list_item **list, ll_data_t item_data)
+{
+    (void)list;
+    (void)item_data;
+    return true;
+}
+
+ll_data_t pop(struct list_item **list)
+{
+    (void)list;
+    return 0;
+}
+
+ll_data_t shift(struct list_item **list)
+{
+    (void)list;
+    return 0;
+}
+
+bool unshift(struct list_item **list, ll_data_t item_data)
+{
+    (void)list;
+    (void)item_data;
+    return true;
+}
+
+void delete_list(struct list_item **list)
+{
+    (void)list;
 }
