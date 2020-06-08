@@ -32,8 +32,8 @@ bool push(struct list_item** list, ll_data_t item_data)
     node->next = NULL;
 
     if (*list == NULL) {
-        *list = node;
         node->previous = NULL;
+        *list = node;
     } else {
         node->previous = *(list + 1);
         (*(list + 1))->next = node;
@@ -59,6 +59,7 @@ ll_data_t pop(struct list_item** list)
         *(list + 1) = tmp->previous;
         (*(list + 1))->next = NULL;
     }
+
     free(tmp);
 
     return tmp_value;
