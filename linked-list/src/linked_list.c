@@ -23,8 +23,15 @@ bool is_list_empty(struct list_item** list)
 
 bool push(struct list_item** list, ll_data_t item_data)
 {
-    (void)list;
-    (void)item_data;
+    if (list == NULL)
+        return false;
+
+    struct list_item* node = (struct list_item*)malloc(sizeof(struct list_item));
+    node->data = item_data;
+    node->previous = *(list + 1);
+    node->next = NULL;
+    (*(list + 1))->next = node;
+    *(list + 1) = node;
     return true;
 }
 
