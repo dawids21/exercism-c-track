@@ -66,8 +66,24 @@ ll_data_t pop(struct list_item** list)
 
 ll_data_t shift(struct list_item** list)
 {
-    (void)list;
-    return 0;
+    if (is_list_empty(list)) {
+        return 0;
+    }
+
+    struct list_item* tmp = *list;
+    ll_data_t tmp_value = tmp->data;
+
+    if (*list == *(list + 1)) {
+        *list = NULL;
+        *(list + 1) = NULL;
+    } else {
+        *list = tmp->next;
+        (*list)->previous = NULL;
+    }
+
+    free(tmp);
+
+    return tmp_value;
 }
 
 bool unshift(struct list_item** list, ll_data_t item_data)
