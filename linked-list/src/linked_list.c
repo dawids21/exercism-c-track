@@ -49,5 +49,12 @@ bool unshift(struct list_item** list, ll_data_t item_data)
 
 void delete_list(struct list_item** list)
 {
-    (void)list;
+    if (!is_list_empty(list)) {
+        while (*list != *(list + 1)) {
+            *(list + 1) = (*(list + 1))->previous;
+            free((*(list + 1))->next);
+        }
+        free(*list);
+    }
+    free(list);
 }
