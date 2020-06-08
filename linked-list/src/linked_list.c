@@ -11,14 +11,14 @@ struct list_item {
 struct list_item** new_list(void)
 {
     struct list_item** list = (struct list_item**)malloc(sizeof(struct list_item*) * 2);
-    *list = NULL;
-    *(list + 1) = NULL;
+    list[0] = NULL;
+    list[1] = NULL;
     return list;
 }
 
 bool is_list_empty(struct list_item** list)
 {
-    return list == NULL || *list == NULL;
+    return list == NULL || list[0] == NULL;
 }
 
 bool push(struct list_item** list, ll_data_t item_data)
@@ -31,15 +31,15 @@ bool push(struct list_item** list, ll_data_t item_data)
     node->data = item_data;
     node->next = NULL;
 
-    if (*list == NULL) {
+    if (list[0] == NULL) {
         node->previous = NULL;
-        *list = node;
+        list[0] = node;
     } else {
-        node->previous = *(list + 1);
-        (*(list + 1))->next = node;
+        node->previous = list[1];
+        list[1]->next = node;
     }
 
-    *(list + 1) = node;
+    list[1] = node;
     return true;
 }
 
@@ -49,15 +49,15 @@ ll_data_t pop(struct list_item** list)
         return 0;
     }
 
-    struct list_item* tmp = *(list + 1);
+    struct list_item* tmp = list[1];
     ll_data_t tmp_value = tmp->data;
 
-    if (*list == *(list + 1)) {
-        *list = NULL;
-        *(list + 1) = NULL;
+    if (list[0] == list[1]) {
+        list[0] = NULL;
+        list[1] = NULL;
     } else {
-        *(list + 1) = tmp->previous;
-        (*(list + 1))->next = NULL;
+        list[1] = tmp->previous;
+        list[1]->next = NULL;
     }
 
     free(tmp);
@@ -71,15 +71,15 @@ ll_data_t shift(struct list_item** list)
         return 0;
     }
 
-    struct list_item* tmp = *list;
+    struct list_item* tmp = list[0];
     ll_data_t tmp_value = tmp->data;
 
-    if (*list == *(list + 1)) {
-        *list = NULL;
-        *(list + 1) = NULL;
+    if (list[0] == list[1]) {
+        list[0] = NULL;
+        list[1] = NULL;
     } else {
-        *list = tmp->next;
-        (*list)->previous = NULL;
+        list[0] = tmp->next;
+        list[0]->previous = NULL;
     }
 
     free(tmp);
@@ -97,26 +97,26 @@ bool unshift(struct list_item** list, ll_data_t item_data)
     node->data = item_data;
     node->previous = NULL;
 
-    if (*list == NULL) {
+    if (list[0] == NULL) {
         node->next = NULL;
-        *(list + 1) = node;
+        list[1] = node;
     } else {
-        node->next = *list;
-        (*list)->previous = node;
+        node->next = list[0];
+        list[0]->previous = node;
     }
 
-    *list = node;
+    list[0] = node;
     return true;
 }
 
 void delete_list(struct list_item** list)
 {
     if (!is_list_empty(list)) {
-        while (*list != *(list + 1)) {
-            *(list + 1) = (*(list + 1))->previous;
-            free((*(list + 1))->next);
+        while (list[0] != list[1]) {
+            list[1] = list[1]->previous;
+            free(list[1]->next);
         }
-        free(*list);
+        free(list[0]);
     }
     free(list);
 }
