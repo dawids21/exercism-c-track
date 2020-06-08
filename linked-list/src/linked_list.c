@@ -18,7 +18,7 @@ struct list_item** new_list(void)
 
 bool is_list_empty(struct list_item** list)
 {
-    return *list == NULL;
+    return list == NULL || *list == NULL;
 }
 
 bool push(struct list_item** list, ll_data_t item_data)
