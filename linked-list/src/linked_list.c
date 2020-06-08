@@ -28,9 +28,15 @@ bool push(struct list_item** list, ll_data_t item_data)
 
     struct list_item* node = (struct list_item*)malloc(sizeof(struct list_item));
     node->data = item_data;
-    node->previous = *(list + 1);
     node->next = NULL;
-    (*(list + 1))->next = node;
+
+    if (*list == NULL) {
+        *list = node;
+        node->previous = NULL;
+    } else {
+        node->previous = *(list + 1);
+        (*(list + 1))->next = node;
+    }
     *(list + 1) = node;
     return true;
 }
