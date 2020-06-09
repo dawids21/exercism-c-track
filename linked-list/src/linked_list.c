@@ -111,6 +111,10 @@ bool unshift(struct list_item** list, ll_data_t item_data)
 
 void delete_list(struct list_item** list)
 {
+    if (list == NULL) {
+        return;
+    }
+
     if (!is_list_empty(list)) {
         while (list[0] != list[1]) {
             list[1] = list[1]->previous;
