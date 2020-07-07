@@ -9,6 +9,13 @@ kind classify_number(const int number)
     }
     kind type_of_number = ERROR;
     int aliquot_sum = calculate_aliquot_sum(number);
+    if (aliquot_sum > number) {
+        type_of_number = ABUNDANT_NUMBER;
+    } else if (aliquot_sum == number) {
+        type_of_number = PERFECT_NUMBER;
+    } else {
+        type_of_number = DEFICIENT_NUMBER;
+    }
     return type_of_number;
 }
 
