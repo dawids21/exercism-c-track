@@ -1,4 +1,5 @@
 #include "perfect_numbers.h"
+#include <math.h>
 
 static int calculate_aliquot_sum(const int number);
 
@@ -22,12 +23,13 @@ kind classify_number(const int number)
 static int calculate_aliquot_sum(const int number)
 {
     int sum = 0;
-    for (int i = 1; i < number; i++) {
-        if (i == number) {
-            continue;
-        }
-        if (number % i == 0) {
+    double max_possible_factor = sqrt(number);
+    for (int i = 1; i <= max_possible_factor; i++) {
+        if (number % i == 0 && i != number) {
             sum += i;
+            if (i != max_possible_factor && i != 1) {
+                sum += number / i;
+            }
         }
     }
     return sum;
