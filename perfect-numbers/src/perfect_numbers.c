@@ -22,12 +22,21 @@ kind classify_number(const int number)
 
 static int calculate_aliquot_sum(const int number)
 {
-    int sum = 0;
+    if (number == 1) {
+        return 0;
+    }
+
+    // Every number > 1 has 1 as its factor
+    int sum = 1;
+    // If number is dividable by i then it is also dividable by number / i
+    // so I can check factors up to a square root of the number
     double max_possible_factor = sqrt(number);
-    for (int i = 1; i <= max_possible_factor; i++) {
-        if (number % i == 0 && i != number) {
+    for (int i = 2; i <= max_possible_factor; i++) {
+        if (number % i == 0) {
             sum += i;
-            if (i != max_possible_factor && i != 1) {
+
+            // if i == max_possible_factor then i and number / i is the same
+            if (i != max_possible_factor) {
                 sum += number / i;
             }
         }
