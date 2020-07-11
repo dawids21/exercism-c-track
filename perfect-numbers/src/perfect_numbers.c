@@ -35,7 +35,7 @@ static int calculate_aliquot_sum(const int number)
         if (number % i == 0) {
             sum += i;
 
-            // if i == max_possible_factor then i and number / i is the same
+            // if i == max_possible_factor (square root) then i and number / i is the same
             if (i != max_possible_factor) {
                 sum += number / i;
             }
