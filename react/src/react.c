@@ -65,24 +65,33 @@ reactor_t* create_reactor()
 void destroy_reactor(reactor_t* reactor)
 {
     for (int reaction_index = 0; reaction_index < reactor->num_of_reactions_one; reaction_index++) {
+
         free(reactor->reactions_one[reaction_index]->input_cell);
-        for (int callback_index = 0; callback_index < reactor->reactions_one[reaction_index]->output_cell->callback_next_id; callback_index++) {
-            if (reactor->reactions_one[reaction_index]->output_cell->callbacks[callback_index] != NULL) {
-                free(reactor->reactions_one[reaction_index]->output_cell->callbacks[callback_index]);
+
+        cell_t* output_cell_to_delete = reactor->reactions_one[reaction_index]->output_cell;
+        for (int callback_index = 0; callback_index < output_cell_to_delete->callback_next_id; callback_index++) {
+            if (output_cell_to_delete->callbacks[callback_index] != NULL) {
+                free(output_cell_to_delete->callbacks[callback_index]);
             }
         }
-        free(reactor->reactions_one[reaction_index]->output_cell);
+
+        free(output_cell_to_delete);
         free(reactor->reactions_one[reaction_index]);
     }
+
     for (int reaction_index = 0; reaction_index < reactor->num_of_reactions_two; reaction_index++) {
+
         free(reactor->reactions_two[reaction_index]->input_cell_one);
         free(reactor->reactions_two[reaction_index]->input_cell_two);
-        for (int callback_index = 0; callback_index < reactor->reactions_two[reaction_index]->output_cell->callback_next_id; callback_index++) {
-            if (reactor->reactions_two[reaction_index]->output_cell->callbacks[callback_index] != NULL) {
-                free(reactor->reactions_two[reaction_index]->output_cell->callbacks[callback_index]);
+
+        cell_t* output_cell_to_delete = reactor->reactions_two[reaction_index]->output_cell;
+        for (int callback_index = 0; callback_index < output_cell_to_delete->callback_next_id; callback_index++) {
+            if (output_cell_to_delete->callbacks[callback_index] != NULL) {
+                free(output_cell_to_delete->callbacks[callback_index]);
             }
         }
-        free(reactor->reactions_two[reaction_index]->output_cell);
+
+        free(output_cell_to_delete);
         free(reactor->reactions_two[reaction_index]);
     }
 
