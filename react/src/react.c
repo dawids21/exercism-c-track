@@ -61,7 +61,6 @@ reactor_t* create_reactor()
     return reactor;
 }
 
-//TODO check if every malloc is freed
 void destroy_reactor(reactor_t* reactor)
 {
     for (int reaction_index = 0; reaction_index < reactor->num_of_reactions_one; reaction_index++) {
