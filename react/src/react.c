@@ -140,7 +140,11 @@ void set_cell_value(cell_t* cell, int new_value)
         perform_reactions(cell->reactor);
     }
 }
-//TODO get_cell_value
+
+int get_cell_value(cell_t* cell)
+{
+    return cell->value;
+}
 
 callback_id add_callback(cell_t* cell, void* data, callback method)
 {
