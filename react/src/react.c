@@ -46,8 +46,8 @@ struct reactor {
 
 static void add_reaction_compute_one(reactor_t*, cell_t*, cell_t*, compute1);
 static void add_reaction_compute_two(reactor_t*, cell_t*, cell_t*, cell_t*, compute2);
-static void perform_reactions(reactor_t*); //TODO
-static void perform_callbacks(cell_t*);    //TODO
+static void perform_reactions(reactor_t*);
+static void perform_callbacks(cell_t*); //TODO
 
 reactor_t* create_reactor()
 {
@@ -67,7 +67,9 @@ void destroy_reactor(reactor_t* reactor)
     for (int reaction_index = 0; reaction_index < reactor->num_of_reactions_one; reaction_index++) {
         free(reactor->reactions_one[reaction_index]->input_cell);
         for (int callback_index = 0; callback_index < reactor->reactions_one[reaction_index]->output_cell->num_of_callbacks; callback_index++) {
-            free(reactor->reactions_one[reaction_index]->output_cell->callbacks[callback_index]);
+            if (reactor->reactions_one[reaction_index]->output_cell->callbacks[callback_index] != NULL) {
+                free(reactor->reactions_one[reaction_index]->output_cell->callbacks[callback_index]);
+            }
         }
         free(reactor->reactions_one[reaction_index]->output_cell);
         free(reactor->reactions_one[reaction_index]);
@@ -76,13 +78,16 @@ void destroy_reactor(reactor_t* reactor)
         free(reactor->reactions_two[reaction_index]->input_cell_one);
         free(reactor->reactions_two[reaction_index]->input_cell_two);
         for (int callback_index = 0; callback_index < reactor->reactions_two[reaction_index]->output_cell->num_of_callbacks; callback_index++) {
-            free(reactor->reactions_two[reaction_index]->output_cell->callbacks[callback_index]);
+            if (reactor->reactions_two[reaction_index]->output_cell->callbacks[callback_index] != NULL) {
+                free(reactor->reactions_two[reaction_index]->output_cell->callbacks[callback_index]);
+            }
         }
         free(reactor->reactions_two[reaction_index]->output_cell);
         free(reactor->reactions_two[reaction_index]);
     }
 
     free(reactor);
+    reactor = NULL;
 }
 
 cell_t* create_input_cell(reactor_t* reactor, int initial_value)
