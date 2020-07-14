@@ -59,16 +59,25 @@ reactor_t* create_reactor()
     return reactor;
 }
 
+//TODO check if every malloc is freed
 void destroy_reactor(reactor_t* reactor)
 {
-    for (int i = 0; i < reactor->num_of_reactions_one; i++) {
-        free(reactor->reactions_one[i]->input_cell);
-        free(reactor->reactions_one[i]->output_cell);
+    for (int reaction_index = 0; reaction_index < reactor->num_of_reactions_one; reaction_index++) {
+        free(reactor->reactions_one[reaction_index]->input_cell);
+        for (int callback_index = 0; callback_index < reactor->reactions_one[reaction_index]->output_cell->num_of_callbacks; callback_index++) {
+            free(reactor->reactions_one[reaction_index]->output_cell->callbacks[callback_index]);
+        }
+        free(reactor->reactions_one[reaction_index]->output_cell);
+        free(reactor->reactions_one[reaction_index]);
     }
-    for (int i = 0; i < reactor->num_of_reactions_two; i++) {
-        free(reactor->reactions_two[i]->input_cell_one);
-        free(reactor->reactions_two[i]->input_cell_two);
-        free(reactor->reactions_two[i]->output_cell);
+    for (int reaction_index = 0; reaction_index < reactor->num_of_reactions_two; reaction_index++) {
+        free(reactor->reactions_two[reaction_index]->input_cell_one);
+        free(reactor->reactions_two[reaction_index]->input_cell_two);
+        for (int callback_index = 0; callback_index < reactor->reactions_two[reaction_index]->output_cell->num_of_callbacks; callback_index++) {
+            free(reactor->reactions_two[reaction_index]->output_cell->callbacks[callback_index]);
+        }
+        free(reactor->reactions_two[reaction_index]->output_cell);
+        free(reactor->reactions_two[reaction_index]);
     }
 
     free(reactor);
