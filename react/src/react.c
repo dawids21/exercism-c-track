@@ -17,7 +17,7 @@ struct reaction_two {
     cell_t* output_cell;
     cell_t* input_cell_one;
     cell_t* input_cell_two;
-    compute1 method;
+    compute2 method;
 };
 
 typedef struct reaction_two reaction_two_t;
