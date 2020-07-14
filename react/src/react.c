@@ -37,7 +37,7 @@ struct cell_t {
     int num_of_callbacks;
 };
 
-struct reactor {
+struct reactor_t {
     reaction_one** reactions_one;
     int num_of_reactions_one;
     reaction_two** reactions_two;
