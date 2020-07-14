@@ -43,3 +43,51 @@ struct reactor {
     reaction_two_t** reactions_two;
     int num_of_reactions_two;
 };
+
+static void add_reaction_compute_one(reactor_t* reactor, cell_t* output_cell, cell_t* input_cell, compute1 method);                         //TODO
+static void add_reaction_compute_two(reactor_t* reactor, cell_t* output_cell, cell_t* input_cell_1, cell_t* input_cell_2, compute2 method); //TODO
+
+//TODO change typedefs in test file
+
+cell_t* create_input_cell(reactor_t* reactor, int initial_value)
+{
+    cell_t* cell = (cell_t*)malloc(sizeof(cell_t));
+
+    cell->value = initial_value;
+    cell->reactor = reactor;
+    cell->type_of_cell = INPUT;
+    cell->callbacks = NULL;
+    cell->num_of_callbacks = 0;
+
+    return cell;
+}
+
+cell_t* create_compute1_cell(reactor_t* reactor, cell_t* input_cell, compute1 method)
+{
+    cell_t* cell = (cell_t*)malloc(sizeof(cell_t));
+
+    cell->value = method(input_cell->value);
+    cell->reactor = reactor;
+    cell->type_of_cell = COMPUTE_ONE;
+    cell->callbacks = NULL;
+    cell->num_of_callbacks = 0;
+
+    add_reaction_compute_one(reactor, cell, input_cell, method);
+
+    return cell;
+}
+
+cell_t* create_compute2_cell(reactor_t* reactor, cell_t* input_cell_one, cell_t* input_cell_two, compute2 method)
+{
+    cell_t* cell = (cell_t*)malloc(sizeof(cell_t));
+
+    cell->value = method(input_cell_one->value, input_cell_two->value);
+    cell->reactor = reactor;
+    cell->type_of_cell = COMPUTE_TWO;
+    cell->callbacks = NULL;
+    cell->num_of_callbacks = 0;
+
+    add_reaction_compute_two(reactor, cell, input_cell_one, input_cell_two, method);
+
+    return cell;
+}
