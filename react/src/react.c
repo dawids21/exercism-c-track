@@ -34,7 +34,7 @@ struct cell {
     reactor_t* reactor;
     enum types_of_cell type_of_cell;
     callback_data_t** callbacks;
-    int num_of_callbacks;
+    int callback_next_id;
 };
 
 struct reactor {
@@ -66,7 +66,7 @@ void destroy_reactor(reactor_t* reactor)
 {
     for (int reaction_index = 0; reaction_index < reactor->num_of_reactions_one; reaction_index++) {
         free(reactor->reactions_one[reaction_index]->input_cell);
-        for (int callback_index = 0; callback_index < reactor->reactions_one[reaction_index]->output_cell->num_of_callbacks; callback_index++) {
+        for (int callback_index = 0; callback_index < reactor->reactions_one[reaction_index]->output_cell->callback_next_id; callback_index++) {
             if (reactor->reactions_one[reaction_index]->output_cell->callbacks[callback_index] != NULL) {
                 free(reactor->reactions_one[reaction_index]->output_cell->callbacks[callback_index]);
             }
@@ -77,7 +77,7 @@ void destroy_reactor(reactor_t* reactor)
     for (int reaction_index = 0; reaction_index < reactor->num_of_reactions_two; reaction_index++) {
         free(reactor->reactions_two[reaction_index]->input_cell_one);
         free(reactor->reactions_two[reaction_index]->input_cell_two);
-        for (int callback_index = 0; callback_index < reactor->reactions_two[reaction_index]->output_cell->num_of_callbacks; callback_index++) {
+        for (int callback_index = 0; callback_index < reactor->reactions_two[reaction_index]->output_cell->callback_next_id; callback_index++) {
             if (reactor->reactions_two[reaction_index]->output_cell->callbacks[callback_index] != NULL) {
                 free(reactor->reactions_two[reaction_index]->output_cell->callbacks[callback_index]);
             }
@@ -98,7 +98,7 @@ cell_t* create_input_cell(reactor_t* reactor, int initial_value)
     cell->reactor = reactor;
     cell->type_of_cell = INPUT;
     cell->callbacks = NULL;
-    cell->num_of_callbacks = 0;
+    cell->callback_next_id = 0;
 
     return cell;
 }
@@ -111,7 +111,7 @@ cell_t* create_compute1_cell(reactor_t* reactor, cell_t* input_cell, compute1 me
     cell->reactor = reactor;
     cell->type_of_cell = COMPUTE_ONE;
     cell->callbacks = NULL;
-    cell->num_of_callbacks = 0;
+    cell->callback_next_id = 0;
 
     add_reaction_compute_one(reactor, cell, input_cell, method);
 
@@ -126,7 +126,7 @@ cell_t* create_compute2_cell(reactor_t* reactor, cell_t* input_cell_one, cell_t*
     cell->reactor = reactor;
     cell->type_of_cell = COMPUTE_TWO;
     cell->callbacks = NULL;
-    cell->num_of_callbacks = 0;
+    cell->callback_next_id = 0;
 
     add_reaction_compute_two(reactor, cell, input_cell_one, input_cell_two, method);
 
