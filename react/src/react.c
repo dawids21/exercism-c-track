@@ -1,9 +1,11 @@
 #include "react.h"
 #include <stdlib.h>
 
-enum types_of_cell { INPUT,
+enum types_of_cell {
+    INPUT,
     COMPUTE_ONE,
-    COMPUTE_TWO };
+    COMPUTE_TWO
+};
 
 struct reaction_one {
     cell_t* output_cell;
@@ -33,14 +35,14 @@ struct cell {
     int value;
     reactor_t* reactor;
     enum types_of_cell type_of_cell;
-    callback_data_t** callbacks;
+    callback_data_t* callbacks[MAX_NUM_OF_CALLBACKS];
     int callback_next_id;
 };
 
 struct reactor {
-    reaction_one_t** reactions_one;
+    reaction_one_t* reactions_one[MAX_NUM_OF_REACTIONS];
     int num_of_reactions_one;
-    reaction_two_t** reactions_two;
+    reaction_two_t* reactions_two[MAX_NUM_OF_REACTIONS];
     int num_of_reactions_two;
 };
 
@@ -53,9 +55,7 @@ reactor_t* create_reactor()
 {
     reactor_t* reactor = (reactor_t*)malloc(sizeof(reactor_t));
 
-    reactor->reactions_one = NULL;
     reactor->num_of_reactions_one = 0;
-    reactor->reactions_two = NULL;
     reactor->num_of_reactions_two = 0;
 
     return reactor;
@@ -105,7 +105,6 @@ cell_t* create_input_cell(reactor_t* reactor, int initial_value)
     cell->value = initial_value;
     cell->reactor = reactor;
     cell->type_of_cell = INPUT;
-    cell->callbacks = NULL;
     cell->callback_next_id = 0;
 
     return cell;
@@ -118,7 +117,6 @@ cell_t* create_compute1_cell(reactor_t* reactor, cell_t* input_cell, compute1 me
     cell->value = method(input_cell->value);
     cell->reactor = reactor;
     cell->type_of_cell = COMPUTE_ONE;
-    cell->callbacks = NULL;
     cell->callback_next_id = 0;
 
     add_reaction_compute_one(reactor, cell, input_cell, method);
@@ -133,7 +131,6 @@ cell_t* create_compute2_cell(reactor_t* reactor, cell_t* input_cell_one, cell_t*
     cell->value = method(input_cell_one->value, input_cell_two->value);
     cell->reactor = reactor;
     cell->type_of_cell = COMPUTE_TWO;
-    cell->callbacks = NULL;
     cell->callback_next_id = 0;
 
     add_reaction_compute_two(reactor, cell, input_cell_one, input_cell_two, method);

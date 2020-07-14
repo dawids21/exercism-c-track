@@ -1,6 +1,9 @@
 #ifndef REACT_H
 #define REACT_H
 
+#define MAX_NUM_OF_REACTIONS 10
+#define MAX_NUM_OF_CALLBACKS 10
+
 struct reactor;
 struct cell;
 
