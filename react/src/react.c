@@ -46,7 +46,8 @@ struct reactor {
 
 static void add_reaction_compute_one(reactor_t*, cell_t*, cell_t*, compute1);
 static void add_reaction_compute_two(reactor_t*, cell_t*, cell_t*, cell_t*, compute2);
-static void perform_reactions(reactor_t*);
+static void perform_reactions(reactor_t*); //TODO
+static void perform_callbacks(cell_t*);    //TODO
 
 reactor_t* create_reactor()
 {
@@ -158,4 +159,24 @@ static void add_reaction_compute_two(reactor_t* reactor, cell_t* output_cell, ce
 
     reactor->reactions_two[reactor->num_of_reactions_two] = reaction;
     reactor->num_of_reactions_two++;
+}
+
+static void perform_reactions(reactor_t* reactor)
+{
+    for (int reaction_index = 0; reaction_index < reactor->num_of_reactions_one; reaction_index++) {
+        cell_t* input_cell = reactor->reactions_one[reaction_index]->input_cell;
+        cell_t* output_cell = reactor->reactions_one[reaction_index]->output_cell;
+        compute1 method = reactor->reactions_one[reaction_index]->method;
+        output_cell->value = method(input_cell->value);
+        perform_callbacks(output_cell);
+    }
+
+    for (int reaction_index = 0; reaction_index < reactor->num_of_reactions_two; reaction_index++) {
+        cell_t* input_cell_one = reactor->reactions_two[reaction_index]->input_cell_one;
+        cell_t* input_cell_two = reactor->reactions_two[reaction_index]->input_cell_two;
+        cell_t* output_cell = reactor->reactions_two[reaction_index]->output_cell;
+        compute2 method = reactor->reactions_two[reaction_index]->method;
+        output_cell->value = method(input_cell_one->value, input_cell_two->value);
+        perform_callbacks(output_cell);
+    }
 }
