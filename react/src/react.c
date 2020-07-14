@@ -218,3 +218,4 @@ static void perform_callbacks(cell_t* cell)
             cell->callbacks[callback_index]->method(cell->callbacks[callback_index]->data, cell->value);
         }
     }
+}
