@@ -47,7 +47,7 @@ struct reactor {
 static void add_reaction_compute_one(reactor_t*, cell_t*, cell_t*, compute1);
 static void add_reaction_compute_two(reactor_t*, cell_t*, cell_t*, cell_t*, compute2);
 static void perform_reactions(reactor_t*);
-static void perform_callbacks(cell_t*); //TODO
+static void perform_callbacks(cell_t*);
 
 reactor_t* create_reactor()
 {
@@ -210,3 +210,11 @@ static void perform_reactions(reactor_t* reactor)
         perform_callbacks(output_cell);
     }
 }
+
+static void perform_callbacks(cell_t* cell)
+{
+    for (int callback_index = 0; callback_index < cell->callback_next_id; callback_index++) {
+        if (cell->callbacks[callback_index] != NULL) {
+            cell->callbacks[callback_index]->method(cell->callbacks[callback_index]->data, cell->value);
+        }
+    }
