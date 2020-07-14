@@ -5,41 +5,41 @@ enum types_of_cell { INPUT,
     COMPUTE_ONE,
     COMPUTE_TWO };
 
-struct reaction_one_t {
-    cell* output_cell;
-    cell* input_cell;
+struct reaction_one {
+    cell_t* output_cell;
+    cell_t* input_cell;
     compute1 method;
 };
 
-typedef struct reaction_one_t reaction_one;
+typedef struct reaction_one reaction_one_t;
 
-struct reaction_two_t {
-    cell* output_cell;
-    cell* input_cell_one;
-    cell* input_cell_two;
+struct reaction_two {
+    cell_t* output_cell;
+    cell_t* input_cell_one;
+    cell_t* input_cell_two;
     compute1 method;
 };
 
-typedef struct reaction_two_t reaction_two;
+typedef struct reaction_two reaction_two_t;
 
-struct callback_data_t {
+struct callback_data {
     void* input;
     callback method;
 };
 
-typedef struct callback_data_t callback_data;
+typedef struct callback_data callback_data_t;
 
-struct cell_t {
+struct cell {
     int value;
-    reactor* reactor;
+    reactor_t* reactor;
     enum types_of_cell type_of_cell;
-    callback_data** callbacks;
+    callback_data_t** callbacks;
     int num_of_callbacks;
 };
 
-struct reactor_t {
-    reaction_one** reactions_one;
+struct reactor {
+    reaction_one_t** reactions_one;
     int num_of_reactions_one;
-    reaction_two** reactions_two;
+    reaction_two_t** reactions_two;
     int num_of_reactions_two;
 };
