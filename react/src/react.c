@@ -23,7 +23,7 @@ struct reaction_two {
 typedef struct reaction_two reaction_two_t;
 
 struct callback_data {
-    void* input;
+    void* data;
     callback method;
 };
 
@@ -139,6 +139,27 @@ void set_cell_value(cell_t* cell, int new_value)
         cell->value = new_value;
         perform_reactions(cell->reactor);
     }
+}
+//TODO get_cell_value
+
+callback_id add_callback(cell_t* cell, void* data, callback method)
+{
+    int id = -1;
+    callback_data_t* callback_data = (callback_data_t*)malloc(sizeof(callback_data_t));
+
+    callback_data->data = data;
+    callback_data->method = method;
+    cell->callbacks[cell->callback_next_id] = callback_data;
+    id = cell->callback_next_id;
+    cell->callback_next_id++;
+
+    return id;
+}
+
+void remove_callback(cell_t* cell, callback_id id)
+{
+    free(cell->callbacks[id]);
+    cell->callbacks[id] = NULL;
 }
 
 static void add_reaction_compute_one(reactor_t* reactor, cell_t* output_cell, cell_t* input_cell, compute1 method)
