@@ -125,3 +125,28 @@ cell_t* create_compute2_cell(reactor_t* reactor, cell_t* input_cell_one, cell_t*
 
     return cell;
 }
+
+static void add_reaction_compute_one(reactor_t* reactor, cell_t* output_cell, cell_t* input_cell, compute1 method)
+{
+    reaction_one_t* reaction = (reaction_one_t*)malloc(sizeof(reaction_one_t));
+
+    reaction->input_cell = input_cell;
+    reaction->output_cell = output_cell;
+    reaction->method = method;
+
+    reactor->reactions_one[reactor->num_of_reactions_one] = reaction;
+    reactor->num_of_reactions_one++;
+}
+
+static void add_reaction_compute_two(reactor_t* reactor, cell_t* output_cell, cell_t* input_cell_one, cell_t* input_cell_two, compute2 method)
+{
+    reaction_two_t* reaction = (reaction_two_t*)malloc(sizeof(reaction_two_t));
+
+    reaction->input_cell_one = input_cell_one;
+    reaction->input_cell_two = input_cell_two;
+    reaction->output_cell = output_cell;
+    reaction->method = method;
+
+    reactor->reactions_two[reactor->num_of_reactions_two] = reaction;
+    reactor->num_of_reactions_two++;
+}
