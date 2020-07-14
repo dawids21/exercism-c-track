@@ -44,8 +44,9 @@ struct reactor {
     int num_of_reactions_two;
 };
 
-static void add_reaction_compute_one(reactor_t*, cell_t*, cell_t*, compute1);          //TODO
-static void add_reaction_compute_two(reactor_t*, cell_t*, cell_t*, cell_t*, compute2); //TODO
+static void add_reaction_compute_one(reactor_t*, cell_t*, cell_t*, compute1);
+static void add_reaction_compute_two(reactor_t*, cell_t*, cell_t*, cell_t*, compute2);
+static void perform_reactions(reactor_t*);
 
 reactor_t* create_reactor()
 {
@@ -124,6 +125,14 @@ cell_t* create_compute2_cell(reactor_t* reactor, cell_t* input_cell_one, cell_t*
     add_reaction_compute_two(reactor, cell, input_cell_one, input_cell_two, method);
 
     return cell;
+}
+
+void set_cell_value(cell_t* cell, int new_value)
+{
+    if (cell->type_of_cell == INPUT) {
+        cell->value = new_value;
+        perform_reactions(cell->reactor);
+    }
 }
 
 static void add_reaction_compute_one(reactor_t* reactor, cell_t* output_cell, cell_t* input_cell, compute1 method)
