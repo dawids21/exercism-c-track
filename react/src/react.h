@@ -14,9 +14,9 @@ reactor_t* create_reactor();
 // destroy_reactor should free all cells created under that reactor.
 void destroy_reactor(reactor_t*);
 
-cell* create_input_cell(reactor_t*, int initial_value);
-cell* create_compute1_cell(reactor_t*, cell_t*, compute1);
-cell* create_compute2_cell(reactor_t*, cell_t*,
+cell_t* create_input_cell(reactor_t*, int initial_value);
+cell_t* create_compute1_cell(reactor_t*, cell_t*, compute1);
+cell_t* create_compute2_cell(reactor_t*, cell_t*,
     cell_t*, compute2);
 
 int get_cell_value(cell_t*);
