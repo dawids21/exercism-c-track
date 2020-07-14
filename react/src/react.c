@@ -47,7 +47,6 @@ struct reactor {
 static void add_reaction_compute_one(reactor_t* reactor, cell_t* output_cell, cell_t* input_cell, compute1 method);                         //TODO
 static void add_reaction_compute_two(reactor_t* reactor, cell_t* output_cell, cell_t* input_cell_1, cell_t* input_cell_2, compute2 method); //TODO
 
-//TODO change typedefs in test file
 reactor_t* create_reactor()
 {
     reactor_t* reactor = (reactor_t*)malloc(sizeof(reactor_t));
