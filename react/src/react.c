@@ -237,8 +237,13 @@ static void perform_reactions(reactor_t* reactor)
         cell_t* input_cell = reactor->reactions_one[reaction_index]->input_cell;
         cell_t* output_cell = reactor->reactions_one[reaction_index]->output_cell;
         compute1 method = reactor->reactions_one[reaction_index]->method;
+
+        int old_value = output_cell->value;
         output_cell->value = method(input_cell->value);
-        perform_callbacks(output_cell);
+
+        if (output_cell->value != old_value) {
+            perform_callbacks(output_cell);
+        }
     }
 
     for (int reaction_index = 0; reaction_index < reactor->num_of_reactions_two; reaction_index++) {
@@ -246,8 +251,13 @@ static void perform_reactions(reactor_t* reactor)
         cell_t* input_cell_two = reactor->reactions_two[reaction_index]->input_cell_two;
         cell_t* output_cell = reactor->reactions_two[reaction_index]->output_cell;
         compute2 method = reactor->reactions_two[reaction_index]->method;
+
+        int old_value = output_cell->value;
         output_cell->value = method(input_cell_one->value, input_cell_two->value);
-        perform_callbacks(output_cell);
+
+        if (output_cell->value != old_value) {
+            perform_callbacks(output_cell);
+        }
     }
 }
 
