@@ -48,6 +48,32 @@ static void add_reaction_compute_one(reactor_t* reactor, cell_t* output_cell, ce
 static void add_reaction_compute_two(reactor_t* reactor, cell_t* output_cell, cell_t* input_cell_1, cell_t* input_cell_2, compute2 method); //TODO
 
 //TODO change typedefs in test file
+reactor_t* create_reactor()
+{
+    reactor_t* reactor = (reactor_t*)malloc(sizeof(reactor_t));
+
+    reactor->reactions_one = NULL;
+    reactor->num_of_reactions_one = 0;
+    reactor->reactions_two = NULL;
+    reactor->num_of_reactions_two = 0;
+
+    return reactor;
+}
+
+void destroy_reactor(reactor_t* reactor)
+{
+    for (int i = 0; i < reactor->num_of_reactions_one; i++) {
+        free(reactor->reactions_one[i]->input_cell);
+        free(reactor->reactions_one[i]->output_cell);
+    }
+    for (int i = 0; i < reactor->num_of_reactions_two; i++) {
+        free(reactor->reactions_two[i]->input_cell_one);
+        free(reactor->reactions_two[i]->input_cell_two);
+        free(reactor->reactions_two[i]->output_cell);
+    }
+
+    free(reactor);
+}
 
 cell_t* create_input_cell(reactor_t* reactor, int initial_value)
 {
