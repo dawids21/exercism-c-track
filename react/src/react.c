@@ -101,6 +101,10 @@ void destroy_reactor(reactor_t* reactor)
 
 cell_t* create_input_cell(reactor_t* reactor, int initial_value)
 {
+    if (reactor == NULL) {
+        return NULL;
+    }
+
     cell_t* cell = (cell_t*)malloc(sizeof(cell_t));
 
     cell->value = initial_value;
@@ -113,6 +117,10 @@ cell_t* create_input_cell(reactor_t* reactor, int initial_value)
 
 cell_t* create_compute1_cell(reactor_t* reactor, cell_t* input_cell, compute1 method)
 {
+    if (reactor == NULL || input_cell == NULL || method == NULL) {
+        return NULL;
+    }
+
     cell_t* cell = (cell_t*)malloc(sizeof(cell_t));
 
     cell->value = method(input_cell->value);
@@ -127,6 +135,10 @@ cell_t* create_compute1_cell(reactor_t* reactor, cell_t* input_cell, compute1 me
 
 cell_t* create_compute2_cell(reactor_t* reactor, cell_t* input_cell_one, cell_t* input_cell_two, compute2 method)
 {
+    if (reactor == NULL || input_cell_one == NULL || input_cell_two == NULL || method == NULL) {
+        return NULL;
+    }
+
     cell_t* cell = (cell_t*)malloc(sizeof(cell_t));
 
     cell->value = method(input_cell_one->value, input_cell_two->value);
@@ -141,6 +153,10 @@ cell_t* create_compute2_cell(reactor_t* reactor, cell_t* input_cell_one, cell_t*
 
 void set_cell_value(cell_t* cell, int new_value)
 {
+    if (cell == NULL) {
+        return;
+    }
+
     if (cell->type_of_cell == INPUT) {
         cell->value = new_value;
         perform_reactions(cell->reactor);
@@ -149,11 +165,19 @@ void set_cell_value(cell_t* cell, int new_value)
 
 int get_cell_value(cell_t* cell)
 {
+    if (cell == NULL) {
+        return -1;
+    }
+
     return cell->value;
 }
 
 callback_id add_callback(cell_t* cell, void* data, callback method)
 {
+    if (cell == NULL || data == NULL || method == NULL) {
+        return -1;
+    }
+
     int id = -1;
     callback_data_t* callback_data = (callback_data_t*)malloc(sizeof(callback_data_t));
 
@@ -168,6 +192,10 @@ callback_id add_callback(cell_t* cell, void* data, callback method)
 
 void remove_callback(cell_t* cell, callback_id id)
 {
+    if (cell == NULL || id < 0 || cell->callbacks[id] == NULL) {
+        return;
+    }
+
     free(cell->callbacks[id]);
     cell->callbacks[id] = NULL;
 }
@@ -192,6 +220,10 @@ static void free_cell(cell_t* cell)
 
 static void add_reaction_compute_one(reactor_t* reactor, cell_t* output_cell, cell_t* input_cell, compute1 method)
 {
+    if (reactor->num_of_reactions_one >= MAX_NUM_OF_REACTIONS) {
+        return;
+    }
+
     reaction_one_t* reaction = (reaction_one_t*)malloc(sizeof(reaction_one_t));
 
     reaction->input_cell = input_cell;
@@ -204,6 +236,10 @@ static void add_reaction_compute_one(reactor_t* reactor, cell_t* output_cell, ce
 
 static void add_reaction_compute_two(reactor_t* reactor, cell_t* output_cell, cell_t* input_cell_one, cell_t* input_cell_two, compute2 method)
 {
+    if (reactor->num_of_reactions_two >= MAX_NUM_OF_REACTIONS) {
+        return;
+    }
+
     reaction_two_t* reaction = (reaction_two_t*)malloc(sizeof(reaction_two_t));
 
     reaction->input_cell_one = input_cell_one;
