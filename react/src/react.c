@@ -46,6 +46,7 @@ struct reactor {
     int num_of_reactions_two;
 };
 
+static void free_cell(cell_t*);
 static void add_reaction_compute_one(reactor_t*, cell_t*, cell_t*, compute1);
 static void add_reaction_compute_two(reactor_t*, cell_t*, cell_t*, cell_t*, compute2);
 static void perform_reactions(reactor_t*);
@@ -73,24 +74,9 @@ void destroy_reactor(reactor_t* reactor)
             continue;
         }
 
-        if (reactor->reactions_one[reaction_index]->input_cell != NULL) {
-            free(reactor->reactions_one[reaction_index]->input_cell);
-            reactor->reactions_one[reaction_index]->input_cell = NULL;
-        }
+        free_cell(reactor->reactions_one[reaction_index]->input_cell);
+        free_cell(reactor->reactions_one[reaction_index]->output_cell);
 
-        cell_t* output_cell_to_delete = reactor->reactions_one[reaction_index]->output_cell;
-        if (output_cell_to_delete != NULL) {
-            for (int callback_index = 0; callback_index < output_cell_to_delete->callback_next_id; callback_index++) {
-                if (output_cell_to_delete->callbacks[callback_index] == NULL) {
-                    continue;
-                }
-                free(output_cell_to_delete->callbacks[callback_index]);
-                output_cell_to_delete->callbacks[callback_index] = NULL;
-            }
-
-            free(output_cell_to_delete);
-            reactor->reactions_one[reaction_index]->output_cell = NULL;
-        }
         free(reactor->reactions_one[reaction_index]);
         reactor->reactions_one[reaction_index] = NULL;
     }
@@ -101,30 +87,10 @@ void destroy_reactor(reactor_t* reactor)
             continue;
         }
 
-        if (reactor->reactions_two[reaction_index]->input_cell_one != NULL) {
-            free(reactor->reactions_two[reaction_index]->input_cell_one);
-            reactor->reactions_two[reaction_index]->input_cell_one = NULL;
-        }
-        if (reactor->reactions_two[reaction_index]->input_cell_two != NULL) {
-            free(reactor->reactions_two[reaction_index]->input_cell_two);
-            reactor->reactions_two[reaction_index]->input_cell_two = NULL;
-        }
+        free_cell(reactor->reactions_two[reaction_index]->input_cell_one);
+        free_cell(reactor->reactions_two[reaction_index]->input_cell_two);
+        free_cell(reactor->reactions_two[reaction_index]->output_cell);
 
-        cell_t* output_cell_to_delete = reactor->reactions_two[reaction_index]->output_cell;
-        if (output_cell_to_delete != NULL) {
-            for (int callback_index = 0; callback_index < output_cell_to_delete->callback_next_id; callback_index++) {
-                if (output_cell_to_delete->callbacks[callback_index] == NULL) {
-                    continue;
-                }
-                if (output_cell_to_delete->callbacks[callback_index] != NULL) {
-                    free(output_cell_to_delete->callbacks[callback_index]);
-                    output_cell_to_delete->callbacks[callback_index] = NULL;
-                }
-            }
-
-            free(output_cell_to_delete);
-            reactor->reactions_two[reaction_index]->output_cell = NULL;
-        }
         free(reactor->reactions_two[reaction_index]);
         reactor->reactions_two[reaction_index] = NULL;
     }
@@ -204,6 +170,24 @@ void remove_callback(cell_t* cell, callback_id id)
 {
     free(cell->callbacks[id]);
     cell->callbacks[id] = NULL;
+}
+
+static void free_cell(cell_t* cell)
+{
+    if (cell == NULL) {
+        return;
+    }
+    if (cell->type_of_cell != INPUT) {
+        for (int callback_index = 0; callback_index < cell->callback_next_id; callback_index++) {
+            if (cell->callbacks[callback_index] == NULL) {
+                continue;
+            }
+            free(cell->callbacks[callback_index]);
+            cell->callbacks[callback_index] = NULL;
+        }
+    }
+    free(cell);
+    cell = NULL;
 }
 
 static void add_reaction_compute_one(reactor_t* reactor, cell_t* output_cell, cell_t* input_cell, compute1 method)
