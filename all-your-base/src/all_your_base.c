@@ -25,7 +25,11 @@ static int64_t convert_number_to_base_10(int8_t* digits, int16_t input_base, siz
 
 static int64_t power(int8_t base, int8_t exponent)
 {
-    return 0;
+    int64_t number = 1;
+    for (int i = 1; i <= exponent; i++) {
+        number *= base;
+    }
+    return number;
 }
 
 // find the biggest number that is smaller than given number and return its exponent
