@@ -20,12 +20,15 @@ int64_t convert_number_to_base_10(int8_t* digits, size_t length)
     return 0;
 }
 
+// find the biggest number that is smaller than given number and return its exponent
 int8_t find_max_exponent(int64_t number, int16_t base)
 {
     int8_t max = 0;
+    int16_t current_exponential = 1;
     for (int i = 1; i < DIGITS_ARRAY_SIZE; i++) {
-        if (number < pow(base, i)) {
-            max = i;
+        current_exponential *= base;
+        if (number < current_exponential) {
+            max = i - 1;
         } else {
             break;
         }
