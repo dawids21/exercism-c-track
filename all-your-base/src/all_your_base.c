@@ -29,7 +29,7 @@ static int64_t power(int8_t base, int8_t exponent)
 }
 
 // find the biggest number that is smaller than given number and return its exponent
-int8_t find_max_exponent(int64_t number, int16_t base)
+static int8_t find_max_exponent(int64_t number, int16_t base)
 {
     int8_t max = 0;
     int16_t current_exponential = 1;
