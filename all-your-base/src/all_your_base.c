@@ -17,7 +17,7 @@ size_t rebase(int8_t *digits, int16_t input_base, int16_t output_base,
         digits[i - max_exponent] = number / power(output_base, i);
         number %= power(output_base, i);
     }
-    return max_exponent;
+    return max_exponent + 1;
 }
 
 static int64_t convert_number_to_base_10(int8_t *digits, int16_t input_base,
