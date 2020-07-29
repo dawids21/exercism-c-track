@@ -48,7 +48,7 @@ static int64_t power(int8_t base, int8_t exponent)
 static int8_t find_max_exponent(int64_t number, int16_t base)
 {
     int8_t max = 0;
-    int16_t current_exponential = 1;
+    int64_t current_exponential = 1;
     for (int i = 1; i < DIGITS_ARRAY_SIZE; i++)
     {
         current_exponential *= base;
