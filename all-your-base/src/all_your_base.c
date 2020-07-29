@@ -14,7 +14,7 @@ size_t rebase(int8_t *digits, int16_t input_base, int16_t output_base,
     int8_t max_exponent = find_max_exponent(number, output_base);
     for (int i = max_exponent; i >= 0; i--)
     {
-        digits[i - max_exponent] = number / power(output_base, i);
+        digits[max_exponent - i] = number / power(output_base, i);
         number %= power(output_base, i);
     }
     return max_exponent + 1;
@@ -54,7 +54,7 @@ static int8_t find_max_exponent(int64_t number, int16_t base)
         current_exponential *= base;
         if (number >= current_exponential)
         {
-            max = i - 1;
+            max = i;
         }
         else
         {
