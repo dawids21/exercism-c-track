@@ -25,7 +25,6 @@ static int64_t convert_number_to_base_10(int8_t *digits, int16_t input_base,
 {
     int64_t number = 0;
     int exponent = length - 1;
-    int a = 0;
     for (size_t i = 0; i < length; i++)
     {
         number += digits[i] * power(input_base, exponent);
