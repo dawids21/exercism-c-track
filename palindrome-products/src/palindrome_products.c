@@ -13,6 +13,8 @@ static size_t add_palindrome(palindrome_t *array,
                              int first_factor,
                              int second_factor,
                              size_t array_length);
+static palindrome_t find_max_palindrome(palindrome_t *array, size_t length);
+static palindrome_t find_min_palindrome(palindrome_t *array, size_t length);
 
 typedef struct
 {
@@ -77,4 +79,24 @@ static size_t add_palindrome(palindrome_t *array,
     palindrome.factors->next = NULL;
     array[array_length] = palindrome;
     return array_length + 1;
+}
+
+static palindrome_t find_max_palindrome(palindrome_t *array, size_t length)
+{
+    palindrome_t max;
+    for (size_t i = 0; i < length; i++)
+    {
+        max = array[i].number > max.number ? array[i] : max;
+    }
+    return max;
+}
+
+static palindrome_t find_min_palindrome(palindrome_t *array, size_t length)
+{
+    palindrome_t min;
+    for (size_t i = 0; i < length; i++)
+    {
+        min = array[i].number < min.number ? array[i] : min;
+    }
+    return min;
 }
