@@ -4,6 +4,7 @@
 #include <stdlib.h>
 
 #define MAX_PALINDROMES 100
+#define MAX_DIGITS 10
 
 typedef struct
 {
@@ -74,7 +75,7 @@ void free_product(product_t *product)
 static bool is_palindrome(int number)
 {
     bool palindrome = true;
-    char *digits = NULL;
+    char digits[MAX_DIGITS];
     size_t length = convert_number_to_char_array(number, digits);
     char *begin = digits;
     char *end = digits + length - 1;
@@ -98,11 +99,10 @@ static bool is_palindrome(int number)
 static size_t convert_number_to_char_array(int number, char *output)
 {
     size_t length = (size_t)(log10(number)) + 1;
-    output = (char *)calloc(length, sizeof(char));
-    char *current = output;
+    char *current = &output[length - 1];
     do
     {
-        *current++ = number % 10;
+        *current-- = number % 10;
         number /= 10;
     } while (number != 0);
     return length;
