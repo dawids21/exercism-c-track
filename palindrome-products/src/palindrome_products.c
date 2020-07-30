@@ -17,6 +17,7 @@ static size_t add_palindrome(palindrome_t *array,
                              size_t array_length);
 static palindrome_t find_max_palindrome(palindrome_t *array, size_t length);
 static palindrome_t find_min_palindrome(palindrome_t *array, size_t length);
+static void free_factor(factor_t *factor);
 
 typedef struct
 {
@@ -162,4 +163,19 @@ static palindrome_t find_min_palindrome(palindrome_t *array, size_t length)
         min = array[i].number < min.number ? array[i] : min;
     }
     return min;
+}
+
+static void free_factor(factor_t *factor)
+{
+    factor_t *current = factor;
+    factor_t *next = current->next;
+    while (next != NULL)
+    {
+        free(current);
+        current = NULL;
+        current = next;
+        next = current->next;
+    }
+    free(current);
+    current = NULL;
 }
