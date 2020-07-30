@@ -58,10 +58,12 @@ static int64_t convert_number_to_base_10(int8_t *digits, int16_t input_base,
     {
         if (digits[i] == 0)
         {
+            // leading zeroes are forbidden
             if (number == 0)
             {
                 break;
             }
+            // other zeroes are irrelevent
             else
             {
                 exponent--;
