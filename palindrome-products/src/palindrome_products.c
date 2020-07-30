@@ -5,6 +5,12 @@
 
 #define MAX_PALINDROMES 20
 
+typedef struct
+{
+    int number;
+    factor_t *factors;
+} palindrome_t;
+
 static bool is_palindrome(int number);
 static size_t convert_number_to_char_array(int number, char *output);
 static int is_palindrome_in_array(palindrome_t *array,
@@ -18,12 +24,6 @@ static size_t add_palindrome(palindrome_t *array,
 static palindrome_t find_max_palindrome(palindrome_t *array, size_t length);
 static palindrome_t find_min_palindrome(palindrome_t *array, size_t length);
 static void free_factor(factor_t *factor);
-
-typedef struct
-{
-    int number;
-    factor_t *factors;
-} palindrome_t;
 
 product_t *get_palindrome_product(int from, int to)
 {
