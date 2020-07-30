@@ -12,7 +12,7 @@ static int8_t find_max_exponent(int64_t number, int16_t base);
 size_t rebase(int8_t *digits, int16_t input_base, int16_t output_base,
               size_t input_length)
 {
-    if (input_base <= 0 || output_base <= 0 || input_length <= 0 || has_incorrect_digits(digits, input_base, input_length))
+    if (input_base <= 1 || output_base <= 1 || input_length <= 0 || has_incorrect_digits(digits, input_base, input_length))
     {
         digits[0] = 0;
         return 0;
