@@ -11,6 +11,12 @@ size_t rebase(int8_t *digits, int16_t input_base, int16_t output_base,
               size_t input_length)
 {
     int64_t number = convert_number_to_base_10(digits, input_base, input_length);
+    if (number == 0)
+    {
+        digits[0] = 0;
+        return 0;
+    }
+
     int8_t max_exponent = find_max_exponent(number, output_base);
     for (int i = max_exponent; i >= 0; i--)
     {
