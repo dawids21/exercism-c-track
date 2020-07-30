@@ -29,6 +29,16 @@ product_t *get_palindrome_product(int from, int to)
     product_t *palindrome_product = (product_t *)calloc(1, sizeof(product_t));
     palindrome_t palidromes[MAX_PALINDROMES]; // all possible palindromes
     size_t palindromes_array_length = 0;
+    for (int first_factor = from; first_factor <= to; first_factor++)
+    {
+        for (int second_factor = first_factor; second_factor <= to; second_factor++)
+        {
+            if (is_palindrome(first_factor * second_factor))
+            {
+            }
+        }
+    }
+
     return palindrome_product;
 }
 
