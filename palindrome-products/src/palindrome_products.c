@@ -6,6 +6,12 @@
 static bool is_palindrome(int number);
 static size_t convert_number_to_char_array(int number, char *output);
 
+typedef struct
+{
+    int number;
+    factor_t factors;
+} palindrome_t;
+
 static bool is_palindrome(int number)
 {
     bool palindrome = true;
