@@ -155,7 +155,7 @@ static size_t add_palindrome(palindrome_t *array,
 
 static palindrome_t find_max_palindrome(palindrome_t *array, size_t length)
 {
-    palindrome_t max;
+    palindrome_t max = array[0];
     for (size_t i = 0; i < length; i++)
     {
         max = array[i].number > max.number ? array[i] : max;
@@ -165,7 +165,7 @@ static palindrome_t find_max_palindrome(palindrome_t *array, size_t length)
 
 static palindrome_t find_min_palindrome(palindrome_t *array, size_t length)
 {
-    palindrome_t min;
+    palindrome_t min = array[0];
     for (size_t i = 0; i < length; i++)
     {
         min = array[i].number < min.number ? array[i] : min;
