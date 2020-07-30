@@ -2,6 +2,7 @@
 #include <math.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define MAX_DIGITS 10
 
@@ -59,6 +60,16 @@ product_t *get_palindrome_product(int from, int to)
                 }
             }
         }
+    }
+    if (palindrome_product->smallest == 0 && palindrome_product->largest == 0)
+    {
+        strcpy(palindrome_product->error, "no palindrome with factors in the range ");
+        char number[MAX_DIGITS];
+        size_t length = convert_number_to_char_array(from, number);
+        strncat(palindrome_product->error, number, length);
+        strcat(palindrome_product->error, " to ");
+        length = convert_number_to_char_array(to, number);
+        strncat(palindrome_product->error, number, length);
     }
     return palindrome_product;
 }
