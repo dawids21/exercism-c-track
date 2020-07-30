@@ -1,4 +1,9 @@
 #include "largest_series_product.h"
+#include <ctype.h>
+#include <stdbool.h>
+#include <string.h>
+
+static bool has_only_digits(char *str);
 
 int64_t largest_series_product(char *digits, size_t span)
 {
@@ -13,4 +18,18 @@ int64_t largest_series_product(char *digits, size_t span)
         max = candidate > max ? candidate : max;
     }
     return max;
+}
+
+static bool has_only_digits(char *str)
+{
+    bool only_digits = true;
+    for (size_t i = 0; i < strlen(str); i++)
+    {
+        if (!isdigit(str[i]))
+        {
+            only_digits = false;
+            break;
+        }
+    }
+    return only_digits;
 }
