@@ -63,6 +63,14 @@ product_t *get_palindrome_product(int from, int to)
     return palindrome_product;
 }
 
+void free_product(product_t *product)
+{
+    free_factor(product->factors_lg);
+    free_factor(product->factors_sm);
+    free(product);
+    product = NULL;
+}
+
 static bool is_palindrome(int number)
 {
     bool palindrome = true;
