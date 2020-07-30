@@ -3,7 +3,7 @@
 #include <math.h>
 #include <stdbool.h>
 
-static bool has_negative_digits(int8_t *digits, size_t length);
+static bool has_incorrect_digits(int8_t *digits, int16_t base, size_t length);
 static int64_t convert_number_to_base_10(int8_t *digits, int16_t input_base,
                                          size_t length);
 static int64_t power(int8_t base, int8_t exponent);
@@ -12,7 +12,7 @@ static int8_t find_max_exponent(int64_t number, int16_t base);
 size_t rebase(int8_t *digits, int16_t input_base, int16_t output_base,
               size_t input_length)
 {
-    if (input_base <= 0 || output_base <= 0 || input_length <= 0 || has_negative_digits(digits, input_length))
+    if (input_base <= 0 || output_base <= 0 || input_length <= 0 || has_incorrect_digits(digits, input_base, input_length))
     {
         digits[0] = 0;
         return 0;
@@ -34,18 +34,18 @@ size_t rebase(int8_t *digits, int16_t input_base, int16_t output_base,
     return max_exponent + 1;
 }
 
-static bool has_negative_digits(int8_t *digits, size_t length)
+static bool has_incorrect_digits(int8_t *digits, int16_t base, size_t length)
 {
-    bool negative_digits = false;
+    bool incorrect_digits = false;
     for (size_t i = 0; i < length; i++)
     {
-        if (digits[i] < 0)
+        if (digits[i] < 0 || digits[i] >= base)
         {
-            negative_digits = true;
+            incorrect_digits = true;
             break;
         }
     }
-    return negative_digits;
+    return incorrect_digits;
 }
 
 static int64_t convert_number_to_base_10(int8_t *digits, int16_t input_base,
