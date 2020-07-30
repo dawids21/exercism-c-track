@@ -5,6 +5,9 @@
 
 static bool is_palindrome(int number);
 static size_t convert_number_to_char_array(int number, char *output);
+static int is_palindrome_in_array(palindrome_t *array,
+                                  int palindrome,
+                                  size_t array_length);                  //TODO
 
 typedef struct
 {
