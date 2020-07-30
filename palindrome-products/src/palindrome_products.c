@@ -3,7 +3,6 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-#define MAX_PALINDROMES 100
 #define MAX_DIGITS 10
 
 typedef struct
@@ -14,60 +13,65 @@ typedef struct
 
 static bool is_palindrome(int number);
 static size_t convert_number_to_char_array(int number, char *output);
-static int is_palindrome_in_array(palindrome_t *array,
-                                  int palindrome,
-                                  size_t array_length);
-static void add_factors(palindrome_t palindrome, int first, int second);
-static size_t add_palindrome(palindrome_t *array,
-                             int first_factor,
-                             int second_factor,
-                             size_t array_length);
-static palindrome_t find_max_palindrome(palindrome_t *array, size_t length);
-static palindrome_t find_min_palindrome(palindrome_t *array, size_t length);
-static void free_factor(factor_t *factor);
+static void add_factors(factor_t **factors, int first, int second);
+static void free_factor(factor_t **factor);
 
 product_t *get_palindrome_product(int from, int to)
 {
     product_t *palindrome_product = (product_t *)calloc(1, sizeof(product_t));
-    palindrome_t palidromes[MAX_PALINDROMES]; // all possible palindromes
-    size_t palindromes_array_length = 0;
     for (int first_factor = from; first_factor <= to; first_factor++)
     {
         for (int second_factor = first_factor; second_factor <= to; second_factor++)
         {
-            if (is_palindrome(first_factor * second_factor))
+            int possible_number = first_factor * second_factor;
+            if (possible_number == palindrome_product->largest)
             {
-                int index = is_palindrome_in_array(palidromes,
-                                                   first_factor * second_factor,
-                                                   palindromes_array_length);
-                if (index >= 0) // palindrome was found
+                add_factors(&palindrome_product->factors_lg, first_factor, second_factor);
+            }
+            else if (possible_number == palindrome_product->smallest)
+            {
+                add_factors(&palindrome_product->factors_sm, first_factor, second_factor);
+            }
+            else if (is_palindrome(possible_number))
+            {
+                if (palindrome_product->smallest == 0 && palindrome_product->largest == 0)
                 {
-                    add_factors(palidromes[index], first_factor, second_factor);
+                    palindrome_product->smallest = possible_number;
+                    palindrome_product->factors_sm = (factor_t *)calloc(1, sizeof(factor_t));
+                    palindrome_product->factors_sm->factor_a = first_factor;
+                    palindrome_product->factors_sm->factor_b = second_factor;
+                    palindrome_product->largest = possible_number;
+                    palindrome_product->factors_lg = (factor_t *)calloc(1, sizeof(factor_t));
+                    palindrome_product->factors_lg->factor_a = first_factor;
+                    palindrome_product->factors_lg->factor_b = second_factor;
                 }
-                else
+                else if (possible_number > palindrome_product->largest)
                 {
-                    palindromes_array_length = add_palindrome(palidromes,
-                                                              first_factor,
-                                                              second_factor,
-                                                              palindromes_array_length);
+                    free_factor(&palindrome_product->factors_lg);
+                    palindrome_product->largest = possible_number;
+                    add_factors(&palindrome_product->factors_lg, first_factor, second_factor);
+                }
+                else if (possible_number < palindrome_product->smallest)
+                {
+                    free_factor(&palindrome_product->factors_sm);
+                    palindrome_product->smallest = possible_number;
+                    add_factors(&palindrome_product->factors_sm, first_factor, second_factor);
                 }
             }
         }
     }
-
-    palindrome_t max = find_max_palindrome(palidromes, palindromes_array_length);
-    palindrome_t min = find_min_palindrome(palidromes, palindromes_array_length);
-    palindrome_product->smallest = min.number;
-    palindrome_product->largest = max.number;
-    palindrome_product->factors_sm = min.factors;
-    palindrome_product->factors_lg = max.factors;
     return palindrome_product;
 }
 
 void free_product(product_t *product)
 {
-    free_factor(product->factors_lg);
-    free_factor(product->factors_sm);
+    if (product == NULL)
+    {
+        return;
+    }
+
+    free_factor(&product->factors_lg);
+    free_factor(&product->factors_sm);
     free(product);
     product = NULL;
 }
@@ -108,74 +112,34 @@ static size_t convert_number_to_char_array(int number, char *output)
     return length;
 }
 
-static int is_palindrome_in_array(palindrome_t *array,
-                                  int palindrome,
-                                  size_t array_length)
+static void add_factors(factor_t **factors, int first, int second)
 {
-    int index = -1;
-    for (size_t i = 0; i < array_length; i++)
+    factor_t *new_factors = (factor_t *)calloc(1, sizeof(factor_t));
+    new_factors->factor_a = first;
+    new_factors->factor_b = second;
+    new_factors->next = NULL;
+    if (*factors == NULL)
     {
-        if (array[i].number == palindrome)
+        *factors = new_factors;
+    }
+    else
+    {
+        factor_t *current_factors = *factors;
+        while (current_factors->next != NULL)
         {
-            index = i;
-            break;
+            current_factors++;
         }
+        current_factors->next = new_factors;
     }
-    return index;
 }
 
-static void add_factors(palindrome_t palindrome, int first, int second)
+static void free_factor(factor_t **factor)
 {
-    factor_t *factors = (factor_t *)calloc(1, sizeof(factor_t));
-    factors->factor_a = first;
-    factors->factor_b = second;
-    factors->next = NULL;
-    factor_t *current_factors = palindrome.factors;
-    while (current_factors->next != NULL)
+    if (*factor == NULL)
     {
-        current_factors++;
+        return;
     }
-    current_factors->next = factors;
-}
-
-static size_t add_palindrome(palindrome_t *array,
-                             int first_factor,
-                             int second_factor,
-                             size_t array_length)
-{
-    palindrome_t palindrome;
-    palindrome.number = first_factor * second_factor;
-    palindrome.factors = (factor_t *)calloc(1, sizeof(factor_t));
-    palindrome.factors->factor_a = first_factor;
-    palindrome.factors->factor_b = second_factor;
-    palindrome.factors->next = NULL;
-    array[array_length] = palindrome;
-    return array_length + 1;
-}
-
-static palindrome_t find_max_palindrome(palindrome_t *array, size_t length)
-{
-    palindrome_t max = array[0];
-    for (size_t i = 0; i < length; i++)
-    {
-        max = array[i].number > max.number ? array[i] : max;
-    }
-    return max;
-}
-
-static palindrome_t find_min_palindrome(palindrome_t *array, size_t length)
-{
-    palindrome_t min = array[0];
-    for (size_t i = 0; i < length; i++)
-    {
-        min = array[i].number < min.number ? array[i] : min;
-    }
-    return min;
-}
-
-static void free_factor(factor_t *factor)
-{
-    factor_t *current = factor;
+    factor_t *current = *factor;
     factor_t *next = current->next;
     while (next != NULL)
     {
@@ -185,5 +149,5 @@ static void free_factor(factor_t *factor)
         next = current->next;
     }
     free(current);
-    current = NULL;
+    *factor = NULL;
 }
