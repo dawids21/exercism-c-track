@@ -117,7 +117,7 @@ static size_t convert_number_to_char_array(int number, char *output)
     char *current = &output[length - 1];
     do
     {
-        *current-- = number % 10;
+        *current-- = (number % 10) + '0';
         number /= 10;
     } while (number != 0);
     return length;
