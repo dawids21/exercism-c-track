@@ -45,13 +45,9 @@ product_t *get_palindrome_product(int from, int to)
                 if (palindrome_product->smallest == 0 && palindrome_product->largest == 0)
                 {
                     palindrome_product->smallest = possible_number;
-                    palindrome_product->factors_sm = (factor_t *)calloc(1, sizeof(factor_t));
-                    palindrome_product->factors_sm->factor_a = first_factor;
-                    palindrome_product->factors_sm->factor_b = second_factor;
+                    add_factors(&palindrome_product->factors_sm, first_factor, second_factor);
                     palindrome_product->largest = possible_number;
-                    palindrome_product->factors_lg = (factor_t *)calloc(1, sizeof(factor_t));
-                    palindrome_product->factors_lg->factor_a = first_factor;
-                    palindrome_product->factors_lg->factor_b = second_factor;
+                    add_factors(&palindrome_product->factors_lg, first_factor, second_factor);
                 }
                 else if (possible_number > palindrome_product->largest)
                 {
