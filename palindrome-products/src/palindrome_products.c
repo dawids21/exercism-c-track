@@ -16,10 +16,16 @@ static bool is_palindrome(int number);
 static size_t convert_number_to_char_array(int number, char *output);
 static void add_factors(factor_t **factors, int first, int second);
 static void free_factor(factor_t **factor);
+static void print_invalid_input_error(int from, int to, char *output);
 
 product_t *get_palindrome_product(int from, int to)
 {
     product_t *palindrome_product = (product_t *)calloc(1, sizeof(product_t));
+    if (from > to)
+    {
+        print_invalid_input_error(from, to, palindrome_product->error);
+        return palindrome_product;
+    }
     for (int first_factor = from; first_factor <= to; first_factor++)
     {
         for (int second_factor = first_factor; second_factor <= to; second_factor++)
@@ -161,4 +167,15 @@ static void free_factor(factor_t **factor)
     }
     free(current);
     *factor = NULL;
+}
+
+static void print_invalid_input_error(int from, int to, char *output)
+{
+    strcpy(output, "invalid input: min is ");
+    char number[MAX_DIGITS];
+    size_t length = convert_number_to_char_array(from, number);
+    strncat(output, number, length);
+    strcat(output, " and max is ");
+    length = convert_number_to_char_array(to, number);
+    strncat(output, number, length);
 }
