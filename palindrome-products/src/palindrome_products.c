@@ -9,7 +9,7 @@ static bool is_palindrome(int number);
 static size_t convert_number_to_char_array(int number, char *output);
 static int is_palindrome_in_array(palindrome_t *array,
                                   int palindrome,
-                                  size_t array_length); //TODO
+                                  size_t array_length);
 static void add_factors(palindrome_t palindrome, int first, int second);
 static size_t add_palindrome(palindrome_t *array,
                              int first_factor,
@@ -97,6 +97,22 @@ static size_t convert_number_to_char_array(int number, char *output)
         number /= 10;
     } while (number != 0);
     return length;
+}
+
+static int is_palindrome_in_array(palindrome_t *array,
+                                  int palindrome,
+                                  size_t array_length)
+{
+    int index = -1;
+    for (size_t i = 0; i < array_length; i++)
+    {
+        if (array[i].number == palindrome)
+        {
+            index = i;
+            break;
+        }
+    }
+    return index;
 }
 
 static void add_factors(palindrome_t palindrome, int first, int second)
