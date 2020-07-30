@@ -17,6 +17,7 @@ static size_t convert_number_to_char_array(int number, char *output);
 static void add_factors(factor_t **factors, int first, int second);
 static void free_factor(factor_t **factor);
 static void print_invalid_input_error(int from, int to, char *output);
+static void print_no_palindrome_error(int from, int to, char *output);
 
 product_t *get_palindrome_product(int from, int to)
 {
@@ -69,13 +70,7 @@ product_t *get_palindrome_product(int from, int to)
     }
     if (palindrome_product->smallest == 0 && palindrome_product->largest == 0)
     {
-        strcpy(palindrome_product->error, "no palindrome with factors in the range ");
-        char number[MAX_DIGITS];
-        size_t length = convert_number_to_char_array(from, number);
-        strncat(palindrome_product->error, number, length);
-        strcat(palindrome_product->error, " to ");
-        length = convert_number_to_char_array(to, number);
-        strncat(palindrome_product->error, number, length);
+        print_no_palindrome_error(from, to, palindrome_product->error);
     }
     return palindrome_product;
 }
@@ -176,6 +171,17 @@ static void print_invalid_input_error(int from, int to, char *output)
     size_t length = convert_number_to_char_array(from, number);
     strncat(output, number, length);
     strcat(output, " and max is ");
+    length = convert_number_to_char_array(to, number);
+    strncat(output, number, length);
+}
+
+static void print_no_palindrome_error(int from, int to, char *output)
+{
+    strcpy(output, "no palindrome with factors in the range ");
+    char number[MAX_DIGITS];
+    size_t length = convert_number_to_char_array(from, number);
+    strncat(output, number, length);
+    strcat(output, " to ");
     length = convert_number_to_char_array(to, number);
     strncat(output, number, length);
 }
