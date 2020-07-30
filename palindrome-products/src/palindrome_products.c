@@ -98,7 +98,7 @@ static bool is_palindrome(int number)
 static size_t convert_number_to_char_array(int number, char *output)
 {
     size_t length = (size_t)(log10(number)) + 1;
-    output = (char)calloc(length, sizeof(char));
+    output = (char *)calloc(length, sizeof(char));
     char *current = output;
     do
     {
