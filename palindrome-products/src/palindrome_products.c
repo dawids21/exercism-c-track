@@ -9,8 +9,8 @@ static bool is_palindrome(int number);
 static size_t convert_number_to_char_array(int number, char *output);
 static int is_palindrome_in_array(palindrome_t *array,
                                   int palindrome,
-                                  size_t array_length);                  //TODO
-static void add_factors(palindrome_t palindrome, int first, int second); //TODO
+                                  size_t array_length); //TODO
+static void add_factors(palindrome_t palindrome, int first, int second);
 static size_t add_palindrome(palindrome_t *array,
                              int first_factor,
                              int second_factor,
@@ -99,11 +99,18 @@ static size_t convert_number_to_char_array(int number, char *output)
     return length;
 }
 
-static void add_factors(palindrome_t palindrome, int first, int second) //TODO
+static void add_factors(palindrome_t palindrome, int first, int second)
 {
     factor_t *factors = (factor_t *)calloc(1, sizeof(factor_t));
     factors->factor_a = first;
     factors->factor_b = second;
+    factors->next = NULL;
+    factor_t *current_factors = palindrome.factors;
+    while (current_factors->next != NULL)
+    {
+        current_factors++;
+    }
+    current_factors->next = factors;
 }
 
 static size_t add_palindrome(palindrome_t *array,
