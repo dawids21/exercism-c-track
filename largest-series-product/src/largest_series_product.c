@@ -7,6 +7,15 @@ static bool has_only_digits(char *str);
 
 int64_t largest_series_product(char *digits, size_t span)
 {
+    if (strlen(digits) < span || !has_only_digits(digits))
+    {
+        return -1;
+    }
+    if (span == 0)
+    {
+        return 1;
+    }
+
     int64_t max = 0;
     for (size_t i = 0; digits[i + span - 1] != '\0'; i++)
     {
