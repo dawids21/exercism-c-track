@@ -86,25 +86,14 @@ void free_product(product_t *product)
 
 static bool is_palindrome(int number)
 {
-    bool palindrome = true;
-    char digits[MAX_DIGITS];
-    size_t length = convert_number_to_char_array(number, digits);
-    char *begin = digits;
-    char *end = digits + length - 1;
-    while (begin < end)
+    int reversed = 0;
+    int temp = number;
+    while (temp != 0)
     {
-        if (*begin == *end)
-        {
-            begin++;
-            end--;
-        }
-        else
-        {
-            palindrome = false;
-            break;
-        }
+        reversed = reversed * 10 + temp % 10;
+        temp /= 10;
     }
-    return palindrome;
+    return number == reversed;
 }
 
 // returns length of the char array representation of the number
