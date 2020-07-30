@@ -34,6 +34,7 @@ size_t rebase(int8_t *digits, int16_t input_base, int16_t output_base,
     return max_exponent + 1;
 }
 
+// incorrect digits are negative digits and these bigger or equal to base
 static bool has_incorrect_digits(int8_t *digits, int16_t base, size_t length)
 {
     bool incorrect_digits = false;
