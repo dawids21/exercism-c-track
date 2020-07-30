@@ -10,6 +10,10 @@ static int8_t find_max_exponent(int64_t number, int16_t base);
 size_t rebase(int8_t *digits, int16_t input_base, int16_t output_base,
               size_t input_length)
 {
+    if (input_base <= 0 || output_base <= 0 || input_length <= 0)
+    {
+        return 0;
+    }
     int64_t number = convert_number_to_base_10(digits, input_base, input_length);
     if (number == 0)
     {
@@ -29,10 +33,6 @@ size_t rebase(int8_t *digits, int16_t input_base, int16_t output_base,
 static int64_t convert_number_to_base_10(int8_t *digits, int16_t input_base,
                                          size_t length)
 {
-    if (input_base <= 0 || length <= 0)
-    {
-        return 0;
-    }
     int64_t number = 0;
     int exponent = length - 1;
     for (size_t i = 0; i < length; i++)
