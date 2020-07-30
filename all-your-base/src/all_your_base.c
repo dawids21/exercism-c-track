@@ -14,6 +14,7 @@ size_t rebase(int8_t *digits, int16_t input_base, int16_t output_base,
 {
     if (input_base <= 0 || output_base <= 0 || input_length <= 0 || has_negative_digits(digits, input_length))
     {
+        digits[0] = 0;
         return 0;
     }
     int64_t number = convert_number_to_base_10(digits, input_base, input_length);
