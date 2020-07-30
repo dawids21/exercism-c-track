@@ -3,7 +3,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-#define MAX_PALINDROMES 20
+#define MAX_PALINDROMES 100
 
 typedef struct
 {
