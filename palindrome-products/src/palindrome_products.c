@@ -35,6 +35,20 @@ product_t *get_palindrome_product(int from, int to)
         {
             if (is_palindrome(first_factor * second_factor))
             {
+                int index = is_palindrome_in_array(palidromes,
+                                                   first_factor * second_factor,
+                                                   palindromes_array_length);
+                if (index >= 0) // palindrome was found
+                {
+                    add_factors(palidromes[index], first_factor, second_factor);
+                }
+                else
+                {
+                    palindromes_array_length = add_palindrome(palidromes,
+                                                              first_factor,
+                                                              second_factor,
+                                                              palindromes_array_length);
+                }
             }
         }
     }
