@@ -39,6 +39,7 @@ static bool is_palindrome(int number)
     return palindrome;
 }
 
+// returns length of the char array representation of the number
 static size_t convert_number_to_char_array(int number, char *output)
 {
     size_t length = (size_t)(log10(number)) + 1;
