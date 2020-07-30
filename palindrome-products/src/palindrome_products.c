@@ -8,6 +8,7 @@ static size_t convert_number_to_char_array(int number, char *output);
 static int is_palindrome_in_array(palindrome_t *array,
                                   int palindrome,
                                   size_t array_length);                  //TODO
+static void add_factors(palindrome_t palindrome, int first, int second); //TODO
 
 typedef struct
 {
@@ -49,4 +50,11 @@ static size_t convert_number_to_char_array(int number, char *output)
         number /= 10;
     } while (number != 0);
     return length;
+}
+
+static void add_factors(palindrome_t palindrome, int first, int second) //TODO
+{
+    factor_t *factors = (factor_t *)calloc(1, sizeof(factor_t));
+    factors->factor_a = first;
+    factors->factor_b = second;
 }
