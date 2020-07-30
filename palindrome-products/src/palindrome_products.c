@@ -53,6 +53,12 @@ product_t *get_palindrome_product(int from, int to)
         }
     }
 
+    palindrome_t max = find_max_palindrome(palidromes, palindromes_array_length);
+    palindrome_t min = find_min_palindrome(palidromes, palindromes_array_length);
+    palindrome_product->smallest = min.number;
+    palindrome_product->largest = max.number;
+    palindrome_product->factors_sm = min.factors;
+    palindrome_product->factors_lg = max.factors;
     return palindrome_product;
 }
 
