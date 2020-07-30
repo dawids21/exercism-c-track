@@ -74,7 +74,7 @@ void free_product(product_t *product)
 static bool is_palindrome(int number)
 {
     bool palindrome = true;
-    char *digits;
+    char *digits = NULL;
     size_t length = convert_number_to_char_array(number, digits);
     char *begin = digits;
     char *end = digits + length - 1;
