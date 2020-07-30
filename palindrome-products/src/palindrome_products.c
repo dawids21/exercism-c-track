@@ -3,6 +3,8 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
+#define MAX_PALINDROMES 20
+
 static bool is_palindrome(int number);
 static size_t convert_number_to_char_array(int number, char *output);
 static int is_palindrome_in_array(palindrome_t *array,
@@ -21,6 +23,14 @@ typedef struct
     int number;
     factor_t *factors;
 } palindrome_t;
+
+product_t *get_palindrome_product(int from, int to)
+{
+    product_t *palindrome_product = (product_t *)calloc(1, sizeof(product_t));
+    palindrome_t palidromes[MAX_PALINDROMES]; // all possible palindromes
+    size_t palindromes_array_length = 0;
+    return palindrome_product;
+}
 
 static bool is_palindrome(int number)
 {
