@@ -9,7 +9,8 @@ comparison_result_t check_lists(int *list_to_compare, int *base_list,
                                 size_t base_list_element_count)
 {
     comparison_result_t result = UNEQUAL;
-    if (is_sublist(list_to_compare, base_list, list_to_compare_element_count, base_list_element_count))
+    if (is_sublist(list_to_compare, base_list, list_to_compare_element_count,
+                   base_list_element_count))
     {
         if (list_to_compare_element_count > base_list_element_count)
         {
