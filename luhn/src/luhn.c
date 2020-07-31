@@ -11,6 +11,19 @@ bool luhn(const char *num)
     {
         return false;
     }
+
+    bool should_double = false;
+    int sum = 0;
+
+    for (int i = (int)strlen(num) - 1; i >= 0; i--)
+    {
+        if (num[i] != ' ')
+        {
+            sum += should_double ? (num[i] - '0') * 2 : (num[i] - '0');
+            should_double = !should_double;
+        }
+    }
+    return sum % 10 == 0;
 }
 
 static bool has_invalid_chars(const char *str)
