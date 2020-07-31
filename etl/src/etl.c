@@ -5,7 +5,7 @@
 
 static int calculate_output_len(const legacy_map *input,
                                 const size_t input_len);
-static void add_entry(new_map **map, const size_t index,
+static void add_entry(new_map *map, const size_t index,
                       const char key, const int value);
 
 int convert(const legacy_map *input, const size_t input_len,
@@ -21,7 +21,7 @@ int convert(const legacy_map *input, const size_t input_len,
              keys_index < strlen(input[input_index].keys);
              keys_index++)
         {
-            add_entry(output, output_index,
+            add_entry(*output, output_index,
                       input[input_index].keys[keys_index],
                       value);
             output_index++;
@@ -41,9 +41,9 @@ static int calculate_output_len(const legacy_map *input,
     return output_len;
 }
 
-static void add_entry(new_map **map, const size_t index,
+static void add_entry(new_map *map, const size_t index,
                       const char key, const int value)
 {
-    map[index]->key = tolower(key);
-    map[index]->value = value;
+    map[index].key = tolower(key);
+    map[index].value = value;
 }
