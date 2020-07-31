@@ -1,8 +1,16 @@
 #include "crypto_square.h"
 #include <ctype.h>
+#include <stdlib.h>
 #include <string.h>
 
 static size_t normalize_string(const char *input, char *output);
+
+char *ciphertext(const char *input)
+{
+    char *output = (char *)calloc(strlen(input), sizeof(char));
+    size_t normalized_len = normalize_string(input, output);
+    return output;
+}
 
 static size_t normalize_string(const char *input, char *output)
 {
