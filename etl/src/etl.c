@@ -1,5 +1,6 @@
 #include "etl.h"
 #include <stdlib.h>
+#include <string.h>
 
 static int calculate_output_len(const legacy_map *input,
                                 const size_t input_len);
@@ -31,8 +32,11 @@ int convert(const legacy_map *input, const size_t input_len,
 static int calculate_output_len(const legacy_map *input,
                                 const size_t input_len)
 {
-    //TODO
     int output_len = 0;
+    for (size_t i = 0; i < input_len; i++)
+    {
+        output_len += strlen(input[i].keys);
+    }
     return output_len;
 }
 
