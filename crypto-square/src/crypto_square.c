@@ -13,7 +13,7 @@ char *ciphertext(const char *input)
     {
         return (char *)calloc(1, sizeof(char));
     }
-    char normalized_string[input_len];
+    char normalized_string[input_len + 1];
     size_t normalized_len = normalize_string(input, normalized_string);
 
     int columns = sqrt(normalized_len) + 1; // check these 2 lines
@@ -55,5 +55,6 @@ static size_t normalize_string(const char *input, char *output)
             output[output_len++] = ch;
         }
     }
+    output[output_len] = '\0';
     return output_len;
 }
