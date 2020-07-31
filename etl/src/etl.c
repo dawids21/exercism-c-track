@@ -17,7 +17,7 @@ int convert(const legacy_map *input, const size_t input_len,
     {
         int value = input[input_index].value;
         for (size_t keys_index = 0;
-             input[input_index].keys[keys_index] != '\0';
+             keys_index < strlen(input[input_index].keys);
              keys_index++)
         {
             add_entry(output, output_index,
