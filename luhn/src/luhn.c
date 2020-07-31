@@ -1,7 +1,7 @@
 #include "luhn.h"
 #include <string.h>
 
-static has_invalid_chars(const char *str);
+static bool has_invalid_chars(const char *str);
 
 bool luhn(const char *num)
 {
@@ -9,4 +9,10 @@ bool luhn(const char *num)
     {
         return false;
     }
+}
+
+static bool has_invalid_chars(const char *str)
+{
+    bool invalid_chars = false;
+    return invalid_chars;
 }
