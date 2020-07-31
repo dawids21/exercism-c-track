@@ -30,4 +30,5 @@ static int count_digits(const char *str)
             num_of_digits++;
         }
     } while (++current_char != '\0');
+    return num_of_digits;
 }
