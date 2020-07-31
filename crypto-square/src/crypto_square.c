@@ -26,7 +26,7 @@ char *ciphertext(const char *input)
     {
         for (int j = 0; j < rows; j++)
         {
-            if (j * columns + i >= (int)input_len)
+            if (j * columns + i >= (int)normalized_len)
             {
                 output[output_index++] = ' ';
             }
