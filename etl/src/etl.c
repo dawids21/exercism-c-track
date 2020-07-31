@@ -10,7 +10,7 @@ static void insert_index(new_map *map, const size_t capacity,
 static int find_insert_point(const new_map *map, const char key,
                              const size_t capacity);
 static void move_elements_by_one(new_map *map,
-                                 size_t start_index,
+                                 int start_index,
                                  size_t capacity);
 
 int convert(const legacy_map *input, const size_t input_len,
@@ -67,13 +67,13 @@ static void insert_index(new_map *map, const size_t capacity,
 }
 
 static void move_elements_by_one(new_map *map,
-                                 size_t start_index,
+                                 int start_index,
                                  size_t capacity)
 {
-    size_t end_index = capacity;
+    int end_index = (int)capacity;
     while (map[--end_index].key == '\0')
         ;
-    for (size_t i = end_index; i >= start_index; i--)
+    for (int i = end_index; i >= start_index; i--)
     {
         map[i + 1] = map[i];
     }
