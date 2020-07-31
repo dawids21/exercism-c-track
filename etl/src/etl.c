@@ -11,6 +11,20 @@ int convert(const legacy_map *input, const size_t input_len,
 {
     int output_len = calculate_output_len(input, input_len);
     *output = (new_map *)calloc(output_len, sizeof(new_map));
+    size_t output_index = 0;
+    for (size_t input_index = 0; input_index < input_len; input_index++)
+    {
+        int value = input[input_index].value;
+        for (size_t keys_index = 0;
+             input[input_index].keys[keys_index] != '\0';
+             keys_index++)
+        {
+            add_entry(output, output_index,
+                      input[input_index].keys[keys_index],
+                      value);
+            output_index++;
+        }
+    }
     return output_len;
 }
 
