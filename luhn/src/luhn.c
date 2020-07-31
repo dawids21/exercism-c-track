@@ -24,7 +24,7 @@ bool luhn(const char *num)
             if (should_double)
             {
                 sum += number;
-                sum -= (number * 2 > 9) ? 9 : 0;
+                sum -= (number >= 5) ? 9 : 0;
             }
             should_double = !should_double;
         }
