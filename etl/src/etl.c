@@ -1,10 +1,11 @@
 #include "etl.h"
+#include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
 
 static int calculate_output_len(const legacy_map *input,
                                 const size_t input_len);
-static void add_entry(const new_map **map, const size_t index,
+static void add_entry(new_map **map, const size_t index,
                       const char key, const int value);
 
 int convert(const legacy_map *input, const size_t input_len,
@@ -40,8 +41,9 @@ static int calculate_output_len(const legacy_map *input,
     return output_len;
 }
 
-static void add_entry(const new_map **map, const size_t index,
+static void add_entry(new_map **map, const size_t index,
                       const char key, const int value)
 {
-    //TODO
+    map[index]->key = tolower(key);
+    map[index]->value = value;
 }
