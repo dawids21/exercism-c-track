@@ -5,19 +5,16 @@
 
 static int calculate_output_len(const legacy_map *input,
                                 const size_t input_len);
-static void add_entry(new_map *map, const size_t capacity,
+static void add_entry(new_map *map, const int index,
                       const char key, const int value);
-static int find_insert_point(const new_map *map, const char key,
-                             const size_t capacity);
-static void move_elements_by_one(new_map *map,
-                                 int start_index,
-                                 size_t capacity);
+static int compare_entries(const void *p1, const void *p2);
 
 int convert(const legacy_map *input, const size_t input_len,
             new_map **output)
 {
     int output_len = calculate_output_len(input, input_len);
     *output = (new_map *)calloc(output_len, sizeof(new_map));
+    int output_index = 0;
     for (size_t input_index = 0; input_index < input_len; input_index++)
     {
         int value = input[input_index].value;
@@ -25,11 +22,13 @@ int convert(const legacy_map *input, const size_t input_len,
              keys_index < strlen(input[input_index].keys);
              keys_index++)
         {
-            add_entry(*output, output_len,
+            add_entry(*output, output_index,
                       input[input_index].keys[keys_index],
                       value);
+            output_index++;
         }
     }
+    qsort(*output, output_len, sizeof(new_map), compare_entries);
     return output_len;
 }
 
@@ -44,55 +43,16 @@ static int calculate_output_len(const legacy_map *input,
     return output_len;
 }
 
-static void add_entry(new_map *map, const size_t capacity,
+static void add_entry(new_map *map, const int index,
                       const char key, const int value)
 {
-    char insert_key = tolower(key);
-    int insert_point = find_insert_point(map, insert_key, capacity);
-    if (map[insert_point].key != '\0')
-    {
-        move_elements_by_one(map, insert_point, capacity);
-    }
-    map[insert_point].key = insert_key;
-    map[insert_point].value = value;
+    map[index].key = tolower(key);
+    map[index].value = value;
 }
 
-static void move_elements_by_one(new_map *map,
-                                 int start_index,
-                                 size_t capacity)
+static int compare_entries(const void *p1, const void *p2)
 {
-    int end_index = (int)capacity;
-    while (map[--end_index].key == '\0')
-        ;
-    for (int i = end_index; i >= start_index; i--)
-    {
-        map[i + 1] = map[i];
-    }
-}
-
-static int find_insert_point(const new_map *map, const char key,
-                             const size_t capacity)
-{
-    int insert_point = -1;
-    if (map[0].key > key)
-    {
-        insert_point = 0;
-    }
-    else
-    {
-        for (size_t i = 0; i < capacity; i++)
-        {
-            if (map[i].key == '\0')
-            {
-                insert_point = i;
-                break;
-            }
-            else if (map[i].key < key && map[i + 1].key > key)
-            {
-                insert_point = i + 1;
-                break;
-            }
-        }
-    }
-    return insert_point;
+    const new_map *entry_1 = p1;
+    const new_map *entry_2 = p2;
+    return entry_1->key - entry_2->key;
 }
