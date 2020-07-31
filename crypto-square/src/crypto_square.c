@@ -17,8 +17,8 @@ char *ciphertext(const char *input)
     char normalized_string[input_len + 1];
     size_t normalized_len = normalize_string(input, normalized_string);
 
-    int columns = sqrt(normalized_len) + 1; // check these 2 lines
-    int rows = normalized_len / columns + 1;
+    int columns = (int)ceil(sqrt(normalized_len));
+    int rows = (int)ceil((double)normalized_len / (double)columns);
 
     char *output = (char *)calloc(columns * rows + 1, sizeof(char));
     int output_index = 0;
