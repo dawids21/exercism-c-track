@@ -22,12 +22,12 @@ static bool has_invalid_chars(const char *str)
 static int count_digits(const char *str)
 {
     int num_of_digits = 0;
-    for (size_t i = 0; i < strlen(str); i++)
+    char current_char = *str;
+    do
     {
-        if (isdigit(str[i]))
+        if (isdigit(current_char))
         {
             num_of_digits++;
         }
-    }
-    return num_of_digits;
+    } while (++current_char != '\0');
 }
