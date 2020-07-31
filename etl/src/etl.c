@@ -5,8 +5,8 @@
 
 static int calculate_output_len(const legacy_map *input,
                                 const size_t input_len);
-static void insert_index(new_map *map, const size_t capacity,
-                         const char key, const int value);
+static void add_entry(new_map *map, const size_t capacity,
+                      const char key, const int value);
 static int find_insert_point(const new_map *map, const char key,
                              const size_t capacity);
 static void move_elements_by_one(new_map *map,
@@ -25,9 +25,9 @@ int convert(const legacy_map *input, const size_t input_len,
              keys_index < strlen(input[input_index].keys);
              keys_index++)
         {
-            insert_index(*output, output_len,
-                         input[input_index].keys[keys_index],
-                         value);
+            add_entry(*output, output_len,
+                      input[input_index].keys[keys_index],
+                      value);
         }
     }
     return output_len;
@@ -44,8 +44,8 @@ static int calculate_output_len(const legacy_map *input,
     return output_len;
 }
 
-static void insert_index(new_map *map, const size_t capacity,
-                         const char key, const int value)
+static void add_entry(new_map *map, const size_t capacity,
+                      const char key, const int value)
 {
     char insert_key = tolower(key);
     int insert_point = find_insert_point(map, insert_key, capacity);
