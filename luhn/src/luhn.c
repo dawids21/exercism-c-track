@@ -19,7 +19,13 @@ bool luhn(const char *num)
     {
         if (num[i] != ' ')
         {
-            sum += should_double ? (num[i] - '0') * 2 : (num[i] - '0');
+            int number = num[i] - '0';
+            sum += number;
+            if (should_double)
+            {
+                sum += number;
+                sum -= (number * 2 > 9) ? 9 : 0;
+            }
             should_double = !should_double;
         }
     }
