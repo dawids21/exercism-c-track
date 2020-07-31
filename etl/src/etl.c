@@ -7,7 +7,7 @@ static int calculate_output_len(const legacy_map *input,
                                 const size_t input_len);
 static void insert_index(new_map *map, const size_t capacity,
                          const char key, const int value);
-static void move_elements_by_one(const new_map *map,
+static void move_elements_by_one(new_map *map,
                                  size_t start_index,
                                  size_t capacity);
 
@@ -61,5 +61,18 @@ static void insert_index(new_map *map, const size_t capacity,
             map[i + 1].value = value;
             break;
         }
+    }
+}
+
+static void move_elements_by_one(new_map *map,
+                                 size_t start_index,
+                                 size_t capacity)
+{
+    size_t end_index = capacity;
+    while (map[--end_index].key == '\0')
+        ;
+    for (size_t i = end_index; i >= start_index; i--)
+    {
+        map[i + 1] = map[i];
     }
 }
