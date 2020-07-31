@@ -20,6 +20,23 @@ char *ciphertext(const char *input)
     int rows = normalized_len / columns + 1;
 
     char *output = (char *)calloc(columns * rows + 1, sizeof(char));
+    int output_index = 0;
+    for (int i = 0; i < columns; i++)
+    {
+        for (int j = 0; j < rows; j++)
+        {
+            if (j * columns + i >= (int)input_len)
+            {
+                output[output_index++] = ' ';
+            }
+            else
+            {
+                output[output_index++] = normalized_string[j * columns + i];
+            }
+        }
+        output[output_index++] = (i == columns - 1) ? '\0' : ' ';
+    }
+
     return output;
 }
 
