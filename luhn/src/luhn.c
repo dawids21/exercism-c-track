@@ -16,6 +16,16 @@ bool luhn(const char *num)
 static bool has_invalid_chars(const char *str)
 {
     bool invalid_chars = false;
+    char current_char = *str;
+    do
+    {
+        if (!isdigit(current_char) && current_char != ' ')
+        {
+            invalid_chars = true;
+            break;
+        }
+    } while (++current_char != '\0');
+
     return invalid_chars;
 }
 
