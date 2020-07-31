@@ -13,6 +13,7 @@ char *ciphertext(const char *input)
     {
         return (char *)calloc(1, sizeof(char));
     }
+
     char normalized_string[input_len + 1];
     size_t normalized_len = normalize_string(input, normalized_string);
 
@@ -42,7 +43,7 @@ char *ciphertext(const char *input)
 
 static size_t normalize_string(const char *input, char *output)
 {
-    size_t output_len;
+    size_t output_len = 0;
     for (size_t i = 0; i < strlen(input); i++)
     {
         char ch = input[i];
