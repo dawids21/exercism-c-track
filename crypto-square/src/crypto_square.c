@@ -7,8 +7,18 @@ static size_t normalize_string(const char *input, char *output);
 
 char *ciphertext(const char *input)
 {
-    char *output = (char *)calloc(strlen(input), sizeof(char));
-    size_t normalized_len = normalize_string(input, output);
+    size_t input_len = strlen(input);
+    if (input_len == 0)
+    {
+        return (char *)calloc(1, sizeof(char));
+    }
+    char normalized_string[input_len];
+    size_t normalized_len = normalize_string(input, normalized_string);
+
+    int columns = sqrt(normalized_len) + 1; // check these 2 lines
+    int rows = normalized_len / columns + 1;
+
+    char *output = (char *)calloc(columns * rows + 1, sizeof(char));
     return output;
 }
 
