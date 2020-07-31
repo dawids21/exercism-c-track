@@ -54,7 +54,7 @@ static int count_digits(const char *str)
     char const *current_char = str;
     do
     {
-        if (isdigit(*current_char))
+        if (*current_char != ' ')
         {
             num_of_digits++;
         }
