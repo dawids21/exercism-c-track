@@ -1,4 +1,5 @@
 #include "run_length_encoding.h"
+#include <ctype.h>
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
@@ -82,6 +83,12 @@ static size_t convert_number_to_char_array(int number, char *output)
 static int read_number(char const **p)
 {
     int number = 0;
-    (void)p;
+    while (isdigit(**p))
+    {
+        number *= 10;
+        number += **p - '0';
+        (*p)++; //TODO
+    }
+
     return number;
 }
