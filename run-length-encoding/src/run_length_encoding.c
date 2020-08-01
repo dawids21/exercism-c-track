@@ -34,8 +34,17 @@ char *encode(const char *text)
 
 char *decode(const char *data)
 {
-    char *decoded = NULL;
-    (void)data;
+    char *decoded = (char *)calloc(MAX_STRING_LEN, sizeof(char));
+    char const *current = data;
+    int number;
+    while (*current != '\0')
+    {
+        number = read_number(&current);
+        char ch = *current;
+        decode_letter(ch, number, decoded);
+        current++;
+    }
+
     return decoded;
 }
 
