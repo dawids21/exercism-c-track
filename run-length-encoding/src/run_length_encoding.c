@@ -4,6 +4,7 @@
 #include <string.h>
 
 static size_t convert_number_to_char_array(int number, char *output);
+static void encode_letter(char ch, int num_of_chars, char *output);
 
 char *encode(const char *text)
 {
@@ -20,6 +21,10 @@ char *decode(const char *data)
     char *decoded = NULL;
     (void)data;
     return decoded;
+}
+
+static void encode_letter(char ch, int num_of_chars, char *output)
+{
 }
 
 // returns length of the char array representation of the number
