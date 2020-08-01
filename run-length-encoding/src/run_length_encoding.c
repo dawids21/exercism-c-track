@@ -8,7 +8,7 @@ static void encode_letter(char ch, int num_of_chars, char *output);
 static int decode_letter(char ch, int num_of_chars,
                          char *output, int output_len);
 static size_t convert_number_to_char_array(int number, char *output);
-static int read_number(char const **p);
+static size_t read_number(char const *p, int *output);
 
 char *encode(const char *text)
 {
@@ -39,10 +39,11 @@ char *decode(const char *data)
     char *decoded = (char *)calloc(MAX_STRING_LEN, sizeof(char));
     int decoded_len = 0;
     char const *current = data;
-    int number;
     while (*current != '\0')
     {
-        number = read_number(&current);
+        int number = 0;
+        int length = read_number(current, &number);
+        current += length;
         char ch = *current;
         decoded_len = decode_letter(ch, number, decoded, decoded_len);
         current++;
@@ -86,15 +87,19 @@ static size_t convert_number_to_char_array(int number, char *output)
     return length;
 }
 
-static int read_number(char const **p)
+static size_t read_number(char const *p, int *output)
 {
-    int number = 0;
-    while (isdigit(**p))
+    size_t length = 0;
+    while (isdigit(*p))
     {
-        number *= 10;
-        number += **p - '0';
-        (*p)++; //TODO
+        *output *= 10;
+        *output += *p - '0';
+        p++;
+        length++;
     }
-
-    return number != 0 ? number : 1;
+    if (*output == 0)
+    {
+        *output = 1;
+    }
+    return length;
 }
