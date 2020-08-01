@@ -1,6 +1,7 @@
 #include "diamond.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 char **make_diamond(const char letter)
 {
@@ -14,36 +15,16 @@ char **make_diamond(const char letter)
     for (int i = 0; i < length; i++)
     {
         diamond[i] = (char *)calloc(length + 1, sizeof(char));
+        memset(diamond[i], ' ', length);
     }
 
-    // First row
-    sprintf(diamond[0], "%*c%*c", (length + 1) / 2,
-            'A', (length + 1) / 2, '\0');
-
-    char current_letter = 'B';
-    for (int row = 1; row < length - 1; row++)
+    for (int row = 0; row < (length + 1) / 2; row++)
     {
-        sprintf(diamond[row], "%*c%*c%*c",
-                (length + 1) / 2 - (current_letter - 'A'),
-                current_letter,
-                2 * (current_letter - 'A'),
-                current_letter,
-                (length + 1) / 2 - (current_letter - 'A'),
-                '\0');
-        if (row < (length - 1) / 2)
-        {
-            current_letter++;
-        }
-        else
-        {
-            current_letter--;
-        }
+        diamond[row][(length - 1) / 2 - row] = 'A' + row;
+        diamond[row][(length - 1) / 2 + row] = 'A' + row;
+        diamond[length - 1 - row][(length - 1) / 2 - row] = 'A' + row;
+        diamond[length - 1 - row][(length - 1) / 2 + row] = 'A' + row;
     }
 
-    if (length > 1) // Last row if exists
-    {
-        sprintf(diamond[length - 1], "%*c%*c", (length + 1) / 2,
-                'A', (length + 1) / 2, '\0');
-    }
     return diamond;
 }
