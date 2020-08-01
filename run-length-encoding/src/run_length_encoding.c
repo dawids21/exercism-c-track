@@ -3,8 +3,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-static size_t convert_number_to_char_array(int number, char *output);
 static void encode_letter(char ch, int num_of_chars, char *output);
+static void decode_letter(char ch, int num_of_chars, char *output);
+static size_t convert_number_to_char_array(int number, char *output);
 
 char *encode(const char *text)
 {
@@ -46,6 +47,13 @@ static void encode_letter(char ch, int num_of_chars, char *output)
         strncat(output, number, number_len);
     }
     output[strlen(output)] = ch;
+}
+
+static void decode_letter(char ch, int num_of_chars, char *output)
+{
+    (void)ch;
+    (void)num_of_chars;
+    (void)output;
 }
 
 // returns length of the char array representation of the number
