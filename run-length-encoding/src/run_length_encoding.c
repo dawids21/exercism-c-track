@@ -1,4 +1,5 @@
 #include "run_length_encoding.h"
+#include <math.h>
 #include <stdlib.h>
 #include <string.h>
 
