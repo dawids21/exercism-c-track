@@ -18,10 +18,18 @@ char *encode(const char *text)
             num_of_chars++;
             encode_letter(text[i], num_of_chars, encoded);
             num_of_chars = 0;
+            if (i + 1 == text_length - 1)
+            {
+                encode_letter(text[i + 1], 1, encoded);
+            }
         }
         else
         {
             num_of_chars++;
+            if (i + 1 == text_length - 1)
+            {
+                encode_letter(text[i], ++num_of_chars, encoded);
+            }
         }
     }
 
