@@ -4,6 +4,11 @@
 
 char **make_diamond(const char letter)
 {
+    if (letter < 'A' || letter > 'Z')
+    {
+        return NULL;
+    }
+
     int length = (letter - 'A') * 2 + 1;
     char **diamond = (char **)calloc(length, sizeof(char *));
     for (int i = 0; i < length; i++)
