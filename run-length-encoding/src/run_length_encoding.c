@@ -24,8 +24,11 @@ char *encode(const char *text)
             num_of_chars = 0;
         }
 
-        if (i + 1 == text_length - 1)
+        if (i + 1 == text_length - 1) // case with the last letter
         {
+            /* if it is diffrent than the letter before then
+            num_of_chars == 0 so ++num_of_chars == 1 else it is
+            treated as another occurance of the current letter */
             encode_letter(text[i + 1], ++num_of_chars, encoded);
             num_of_chars = 0;
         }
@@ -43,7 +46,8 @@ char *decode(const char *data)
     {
         int number = 0;
         int length = read_number(current, &number);
-        current += length;
+        current += length; // move the pointer so that it points
+                           // just after number
         char ch = *current;
         decoded_len = decode_letter(ch, number, decoded, decoded_len);
         current++;
@@ -87,6 +91,7 @@ static size_t convert_number_to_char_array(int number, char *output)
     return length;
 }
 
+// returns length of read number
 static size_t read_number(char const *p, int *output)
 {
     size_t length = 0;
