@@ -6,6 +6,7 @@
 static void encode_letter(char ch, int num_of_chars, char *output);
 static void decode_letter(char ch, int num_of_chars, char *output);
 static size_t convert_number_to_char_array(int number, char *output);
+static int read_number(char const **p);
 
 char *encode(const char *text)
 {
@@ -67,4 +68,11 @@ static size_t convert_number_to_char_array(int number, char *output)
         number /= 10;
     } while (number != 0);
     return length;
+}
+
+static int read_number(char const **p)
+{
+    int number = 0;
+    (void)p;
+    return number;
 }
