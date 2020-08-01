@@ -39,40 +39,39 @@ char *encode(char *text, size_t rails)
     char *output = (char *)calloc(strlen(text) + 1, sizeof(char));
     for (size_t i = 0; i < rails; i++)
     {
-        strcat(output, individual_rails[i]); // concatenate all rails
+        strcat(output, array_of_rails[i]); // concatenate all rails
     }
+
+    for (size_t i = 0; i < rails; i++)
+    {
+        free(array_of_rails[i]);
+    }
+
     return output;
 }
 
 char *decode(char *ciphertext, size_t rails)
 {
-    int space_on_each_rail[rails]; // Create rails with apropriate
-                                   // amount of space
-    for (size_t i = 0; i < rails; i++)
-    {
-        space_on_each_rail[i] = 0;
-    }
+    int space_on_each_rail[rails]; // Calculate how much space is needed
+                                   // on each rail
+    memset(space_on_each_rail, 0, rails * sizeof(int));
     calculate_space_on_rails(strlen(ciphertext), rails, space_on_each_rail);
+
     char *array_of_rails[rails];
-    for (size_t i = 0; i < rails; i++)
-    {
-        array_of_rails[i] = (char *)calloc(space_on_each_rail[i] + 1,
-                                           sizeof(char));
-    }
-
-    int current_start = 0; // Place text on each rail
-    for (size_t i = 0; i < rails; i++)
-    {
-        memcpy(array_of_rails[i], &ciphertext[current_start], space_on_each_rail[i]);
-        current_start += space_on_each_rail[i];
-    }
-
-    char *output = (char *)calloc(strlen(ciphertext) + 1, sizeof(char));
+    char *text_for_rail = ciphertext;
     char *pointer_to_rail[rails];
     for (size_t i = 0; i < rails; i++)
     {
-        pointer_to_rail[i] = array_of_rails[i];
+        array_of_rails[i] = (char *)calloc(space_on_each_rail[i] + 1,
+                                           sizeof(char)); //Create rails
+        memcpy(array_of_rails[i], text_for_rail,
+               space_on_each_rail[i]); // Place text on each rail
+        text_for_rail += space_on_each_rail[i];
+        pointer_to_rail[i] = array_of_rails[i]; // Get pointer to each rail
+                                                // for iterations
     }
+
+    char *output = (char *)calloc(strlen(ciphertext) + 1, sizeof(char));
     size_t num_of_current_rail = 0;
     bool forward = true;
     for (size_t i = 0; i < strlen(ciphertext); i++) //Read text from each rail
