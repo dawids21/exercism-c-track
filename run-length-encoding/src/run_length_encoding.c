@@ -10,7 +10,8 @@ char *encode(const char *text)
 {
     char *encoded = (char *)calloc(MAX_STRING_LEN, sizeof(char));
     int num_of_chars = 0;
-    for (int i = 0; i < (int)strlen(text) - 1; i++)
+    int text_length = (int)strlen(text);
+    for (int i = 0; i < text_length - 1; i++)
     {
         if (text[i] != text[i + 1])
         {
