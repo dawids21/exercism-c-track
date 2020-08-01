@@ -3,19 +3,23 @@
 #include <stdlib.h>
 #include <string.h>
 
-static const int MAX_RAIL_LENGTH = 30;
-
 static void calculate_space_on_rails(size_t len_of_text, size_t rails,
                                      int *space_on_rail);
 
 char *encode(char *text, size_t rails)
 {
-    char individual_rails[rails][MAX_RAIL_LENGTH];
+    int space_on_each_rail[rails]; // Calculate how much space is needed
+                                   // on each rail
+    memset(space_on_each_rail, 0, rails * sizeof(int));
+    calculate_space_on_rails(strlen(text), rails, space_on_each_rail);
+    char *array_of_rails[rails];
     char *pointer_to_rail[rails];
     for (size_t i = 0; i < rails; i++)
     {
-        memset(individual_rails[i], '\0', MAX_RAIL_LENGTH);
-        pointer_to_rail[i] = individual_rails[i];
+        array_of_rails[i] = (char *)calloc(space_on_each_rail[i] + 1,
+                                           sizeof(char)); //Create rails
+        pointer_to_rail[i] = array_of_rails[i];           // Get pointer to each rail
+                                                          // for iterations
     }
 
     size_t num_of_current_rail = 0;
