@@ -11,10 +11,12 @@ char **make_diamond(const char letter)
         diamond[i] = (char *)calloc(length + 1, sizeof(char));
     }
 
-    sprintf(diamond[0], "%*c", (length + 1) / 2, letter);
+    sprintf(diamond[0], "%*c%*c", (length + 1) / 2,
+            'A', (length + 1) / 2, '\0');
     if (length > 1)
     {
-        sprintf(diamond[length - 1], "%*c", (length + 1) / 2, letter);
+        sprintf(diamond[length - 1], "%*c%*c", (length + 1) / 2,
+                'A', (length + 1) / 2, '\0');
     }
     return diamond;
 }
