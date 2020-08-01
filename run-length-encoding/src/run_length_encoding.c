@@ -90,5 +90,5 @@ static int read_number(char const **p)
         (*p)++; //TODO
     }
 
-    return number;
+    return number != 0 ? number : 1;
 }
