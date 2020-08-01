@@ -16,6 +16,7 @@ char **make_diamond(const char letter)
         diamond[i] = (char *)calloc(length + 1, sizeof(char));
     }
 
+    // First row
     sprintf(diamond[0], "%*c%*c", (length + 1) / 2,
             'A', (length + 1) / 2, '\0');
 
@@ -39,7 +40,7 @@ char **make_diamond(const char letter)
         }
     }
 
-    if (length > 1)
+    if (length > 1) // Last row if exists
     {
         sprintf(diamond[length - 1], "%*c%*c", (length + 1) / 2,
                 'A', (length + 1) / 2, '\0');
