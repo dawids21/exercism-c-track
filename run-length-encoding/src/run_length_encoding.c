@@ -5,7 +5,8 @@
 #include <string.h>
 
 static void encode_letter(char ch, int num_of_chars, char *output);
-static void decode_letter(char ch, int num_of_chars, char *output);
+static int decode_letter(char ch, int num_of_chars,
+                         char *output, int output_len);
 static size_t convert_number_to_char_array(int number, char *output);
 static int read_number(char const **p);
 
@@ -36,13 +37,14 @@ char *encode(const char *text)
 char *decode(const char *data)
 {
     char *decoded = (char *)calloc(MAX_STRING_LEN, sizeof(char));
+    int decoded_len = 0;
     char const *current = data;
     int number;
     while (*current != '\0')
     {
         number = read_number(&current);
         char ch = *current;
-        decode_letter(ch, number, decoded);
+        decoded_len = decode_letter(ch, number, decoded, decoded_len);
         current++;
     }
 
@@ -60,7 +62,8 @@ static void encode_letter(char ch, int num_of_chars, char *output)
     output[strlen(output)] = ch;
 }
 
-static void decode_letter(char ch, int num_of_chars, char *output)
+static int decode_letter(char ch, int num_of_chars,
+                         char *output, int output_len)
 {
     (void)ch;
     (void)num_of_chars;
