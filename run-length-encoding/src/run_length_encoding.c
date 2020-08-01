@@ -13,23 +13,17 @@ char *encode(const char *text)
     int text_length = (int)strlen(text);
     for (int i = 0; i < text_length - 1; i++)
     {
+        num_of_chars++;
         if (text[i] != text[i + 1])
         {
-            num_of_chars++;
             encode_letter(text[i], num_of_chars, encoded);
             num_of_chars = 0;
-            if (i + 1 == text_length - 1)
-            {
-                encode_letter(text[i + 1], 1, encoded);
-            }
         }
-        else
+
+        if (i + 1 == text_length - 1)
         {
-            num_of_chars++;
-            if (i + 1 == text_length - 1)
-            {
-                encode_letter(text[i], ++num_of_chars, encoded);
-            }
+            encode_letter(text[i + 1], ++num_of_chars, encoded);
+            num_of_chars = 0;
         }
     }
 
