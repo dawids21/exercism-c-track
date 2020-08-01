@@ -1,4 +1,5 @@
 #include "rail_fence_cipher.h"
+#include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -15,23 +16,19 @@ char *encode(char *text, size_t rails)
     }
 
     size_t num_of_current_rail = 0;
+    bool forward = true;
     for (size_t i = 0; i < strlen(text); i++)
     {
         *pointer_to_rail[num_of_current_rail] = text[i];
         pointer_to_rail[num_of_current_rail]++;
 
-        if ((i / rails) % 2 == 0) // we are going forward
+        if (rails > 1)
         {
-            if (num_of_current_rail + 1 < rails)
+            num_of_current_rail += forward ? 1 : -1;
+            if ((num_of_current_rail == rails - 1 && forward)
+                || (num_of_current_rail == 0 && !forward))
             {
-                num_of_current_rail++;
-            }
-        }
-        else // we are going backward
-        {
-            if (num_of_current_rail > 0)
-            {
-                num_of_current_rail--;
+                forward = !forward;
             }
         }
     }
