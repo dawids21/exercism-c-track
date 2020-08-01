@@ -3,7 +3,7 @@
 
 char *encode(const char *text)
 {
-    char *encoded = NULL;
+    char *encoded = (char *)calloc(MAX_STRING_LEN, sizeof(char));
     (void)text;
     return encoded;
 }
