@@ -65,9 +65,12 @@ static void encode_letter(char ch, int num_of_chars, char *output)
 static int decode_letter(char ch, int num_of_chars,
                          char *output, int output_len)
 {
-    (void)ch;
-    (void)num_of_chars;
-    (void)output;
+    int i;
+    for (i = output_len; i < output_len + num_of_chars; i++)
+    {
+        output[i] = ch;
+    }
+    return i;
 }
 
 // returns length of the char array representation of the number
