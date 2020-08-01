@@ -26,11 +26,11 @@ char **make_diamond(const char letter)
                 '\0');
         if (row < (length - 1) / 2)
         {
-            current_letter--;
+            current_letter++;
         }
         else
         {
-            current_letter++;
+            current_letter--;
         }
     }
 
