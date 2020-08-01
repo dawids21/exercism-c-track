@@ -36,6 +36,17 @@ char *decode(const char *data)
 
 static void encode_letter(char ch, int num_of_chars, char *output)
 {
+    if (num_of_chars == 1)
+    {
+        output[strlen(output)] = ch;
+    }
+    else
+    {
+        char number[4];
+        size_t number_len = convert_number_to_char_array(num_of_chars, number);
+        strncat(output, number, number_len);
+        output[strlen(output)] = ch;
+    }
 }
 
 // returns length of the char array representation of the number
